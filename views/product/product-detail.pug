@@ -1,0 +1,17 @@
+extends ../../layouts/common
+block content
+  div.detail-product-wrapper
+    div
+      img.image-detail-product(src= product.image[1])
+    div.info-detail-product
+      h2= product.name
+      h3= 'Giá ' + product.price
+      p= 'Hạn sử dụng ' +product.date
+      form(action=`/carts/add/${product.id}` method="POST" enctype="application/x-www-form-urlencoded" )
+        #decrease.value-button(onclick='decreaseValue()', value='Decrease Value') -
+        input#amount(type = 'text', name='amount' value='0')
+        #increase.value-button(onclick='increaseValue()', value='Increase Value') +
+        button add
+    
+      
+      
