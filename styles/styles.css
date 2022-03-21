@@ -1,0 +1,26 @@
+.grid-parent{
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  padding: 10px;
+}
+.cart-view{
+   text-decoration: none;
+  
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.detail-product-wrapper{
+  display: flex;
+  flex-direction: row;
+  
+}
+.image-detail-product{
+   width: 600;
+}
+.amount-wrapper{
+  display: flex;
+  flex-direction: row;
+}
+.form-product-detail{
+  display: flex;
+  flex-direction: row;
+}

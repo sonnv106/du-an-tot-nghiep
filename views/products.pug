@@ -1,0 +1,12 @@
+extends ../layouts/common
+block content
+  if user.isAdmin
+    a(href='/products/create') Thêm sản phẩm
+  else
+    div.grid-parent
+       each product in products
+        a.cart.cart-view(href="/products/detail/"+product.id)
+          img.card-img-top(src= product.image[1])
+          .card-body
+            h6.card-title= product.name
+            p.card-text= product.price + 'đ'
