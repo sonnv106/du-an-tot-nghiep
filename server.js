@@ -34,7 +34,8 @@ var cartRouter = require('./routes/cart.route');
 var apiUser = require("./api/routes/user.route");
 var apiProduct = require("./api/routes/product.route");
 var apiCategory = require("./api/routes/category.route")
-
+var apiCart = require("./api/routes/cart.route");
+var apiBill = require("./api/routes/bill.route")
 // var authenToken = require("./api/middlewares/authenToken.middleware");
 // app.use(authenToken)
 
@@ -54,6 +55,8 @@ app.use(express.static("public"));
 app.use("/api/products", apiProduct);
 app.use("/api/users", apiUser);
 app.use("/api/categories",apiCategory);
+app.use("/api/cart", apiCart);
+app.use("/api/bills", apiBill);
 // //routes
 // app.use("/users", authMiddleware.requireAuth, userRouter);
 // app.use("/books", authMiddleware.requireAuth,bookRouter);
@@ -68,7 +71,7 @@ app.use("/api/categories",apiCategory);
 app.use("/products", productRouter);
 app.use('/', authRouter);
 app.use('/users', userRouter);
-app.use('/carts', cartRouter)
+app.use('/cart', cartRouter)
 
 //User
 // listen for requests :)

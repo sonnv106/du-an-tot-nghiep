@@ -1,0 +1,24 @@
+extends ../layouts/common
+block content
+  h1 Giỏ hàng
+  table(style='')
+    tr
+      th Ten san pham
+      th Gia tien
+      th So luong 
+      th Thanh tien
+      th Tuy chon
+      
+    each product in products
+      tr
+        td= product.product_name
+        td= product.price
+        td
+            .btn(onclick='decreaseValueCart()', value='Decrease Value') -
+            input#amount(type = 'text', name=product.id value= product.amount)
+            .btn(onclick='increaseValueCart()', value='Increase Value') +
+        td= product.amount*product.price
+        td 
+          .btn.btn-danger Xoa san pham
+      
+      

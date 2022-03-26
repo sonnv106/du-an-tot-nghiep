@@ -3,8 +3,14 @@ var User = require("../models/user.model");
 var Cart = require("../models/cart.model");
 var jwt = require("jsonwebtoken");
 
-module.exports.getCart = (req, res) => {
-  res.render("product/add");
+
+
+module.exports.getCart = async (req, res) => {
+  var user_id = jwt.verify(req.cookies.token, process.env.ACCESS_TOKEN_SECRET).id;
+  var cart = await Cart.findOne({user_id: user_id});
+  res.render("cart",{
+    products : cart.products
+  });
 };
 module.exports.addToCart = async (req, res) => {
   

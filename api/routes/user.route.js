@@ -18,7 +18,7 @@ router.post('/change/password', controller.changePassword)
 router. post('/forgot/password', controller.forgotPassword )
 
 // thay doi thong tin
-router.post('/updateInfo', controller.updateInfo)
+router.post('/update/info', controller.updateInfo)
 
 
 module.exports = router;

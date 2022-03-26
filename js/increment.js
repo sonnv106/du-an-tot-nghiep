@@ -12,3 +12,18 @@ function decreaseValue() {
   value--;
   document.getElementById('amount').value = value;
 }
+
+function increaseValueCart() {
+  var value = parseInt(document.getElementById('amount').value, 10);
+  value = isNaN(value) ? 0 : value;
+  value++;
+  document.getElementById('amount').value = value;
+}
+
+function decreaseValueCart() {
+  var value = parseInt(document.getElementById('amount').value, 10);
+  value = isNaN(value) ? 0 : value;
+  value < 1 ? value = 1 : '';
+  value--;
+  document.getElementById('amount').value = value;
+}

@@ -6,6 +6,9 @@ var jwt = require('jsonwebtoken');
 module.exports.getLogin = (req, res, next) => {
   res.render("login");
 };
+module.exports.redirect = (req, res)=>{
+  res.redirect('/login')
+}
 module.exports.postLogin = async (req, res, next) => {
   var email = req.body.email;
   var password = req.body.password;
