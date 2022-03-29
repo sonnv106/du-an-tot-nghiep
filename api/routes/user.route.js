@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var upload = require("../../multer");
 
 var controller = require('../controllers/user.controller')
 //lay thong tin
@@ -18,7 +19,7 @@ router.post('/change/password', controller.changePassword)
 router. post('/forgot/password', controller.forgotPassword )
 
 // thay doi thong tin
-router.post('/update/info', controller.updateInfo)
+router.post('/update/info', upload.single('avatar'), controller.updateInfo)
 
 
 module.exports = router;

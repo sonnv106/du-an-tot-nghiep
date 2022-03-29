@@ -5,7 +5,7 @@ var Cart = require("../../models/cart.model");
 var Product = require("../../models/product.model");
 var jwt = require("jsonwebtoken");
 
-module.exports.getall = async (req, res) => {
+module.exports.get = async (req, res) => {
   var user_id = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET).id;
   var bill = await Bill.findOne({ user_id: user_id });
   res.json(bill);
@@ -37,3 +37,16 @@ module.exports.add = async (req, res) => {
   var bill = await Bill.create(data);
   res.json(bill);
 };
+module.exports.cancel = async (req, res)=>{
+  var user_id = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET).id;
+  var bill = await Bill.findOne({ _id: req.body.bill_id });
+  if(user_id === bill.user_id){
+    await Bill.deleteOne({ _id: bill._id})
+    res.json("Delete success!")
+    return;
+  }else{
+    res.json("Errors")
+    return;
+  }
+  
+}

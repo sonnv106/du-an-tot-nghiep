@@ -1,5 +1,6 @@
 var Product = require("../../models/product.model");
 var cloudinary = require("../../cloudinary");
+var Category = require("../../models/category.model");
 
 module.exports.getAll = async function(req, res) {
   var products = await Product.find();
@@ -35,3 +36,8 @@ module.exports.createProduct = async (req, res) => {
   var product = await Product.create(data);
   res.json(product);
 };
+module.exports.getProductCategory = async (req, res)=>{
+  var category = await Category.findOne({_id:req.params.id })
+  var products = await Product.find({category: category.name})
+  res.json(products)
+}

@@ -1,6 +1,9 @@
+
+var Category = require("../../models/category.model");
 var Product = require("../../models/product.model");
 var User = require("../../models/user.model");
 var Cart = require("../../models/cart.model");
+
 var jwt = require("jsonwebtoken");
 
 module.exports.getCart = async (req, res) => {

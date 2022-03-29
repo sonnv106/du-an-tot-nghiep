@@ -1,9 +1,9 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
+var cloudinary = require("../../cloudinary");
 var jwt = require('jsonwebtoken');
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
 var User = require('../../models/user.model');
 const shortid = require('shortid');
 
@@ -164,7 +164,7 @@ module.exports.changePassword = async (req, res)=>{
       if (result) {
         user.password =  bcrypt.hashSync(newPassword, 10);
         await user.save()
-        res.json(newPassword)
+        res.json("Success")
       }
       else{
         res.status(403).json('Sai mat khau');
@@ -177,7 +177,6 @@ module.exports.changePassword = async (req, res)=>{
 module.exports.forgotPassword = async (req, res)=>{
   var email = req.body.email;
   var user = await User.findOne({ email: email });
-  console.log(user)
   if(user){
     const newPassword = shortid.generate();
     
@@ -207,17 +206,18 @@ module.exports.forgotPassword = async (req, res)=>{
 }
 
 // cap nhat thong tin
-module.exports.updateInfo = async (req, res, next)=>{
+module.exports.updateInfo = async (req, res)=>{
+  var avatar = await cloudinary.uploader.upload(req.file.path);
   var decode = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET) ;
   if(decode){
-    var email = decode.email;
-    var user = await User.findOne({ email: email });
-    var avatar = req.body.avatar;
-    var address = req.body.address;
-    user.avatar = avatar;
-    user.address = address;
+    var user = await User.findOne({ email: decode.email });
+    user.avatar = avatar.secure_url;
+    user.address = req.body.address;
+    user.name = req.body.name;
+    user.phone = req.body.phone;
     await user.save();
     res.json(user)
+    return;
   }else{
     res.json('errors')
   }
