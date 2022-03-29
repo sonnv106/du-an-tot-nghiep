@@ -35,6 +35,7 @@ module.exports.add = async (req, res) => {
   };
   
   var bill = await Bill.create(data);
+  await Cart.findOneAndRemove({user_id: user_id})
   res.json(bill);
 };
 module.exports.cancel = async (req, res)=>{

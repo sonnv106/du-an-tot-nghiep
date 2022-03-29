@@ -21,5 +21,8 @@ router. post('/forgot/password', controller.forgotPassword )
 // thay doi thong tin
 router.post('/update/info', upload.single('avatar'), controller.updateInfo)
 
+router.get('/favorite', controller.getFavoriteProduct) 
+
+router.post('/favorite/add', controller.addFavoriteProduct)
 
 module.exports = router;

@@ -41,3 +41,12 @@ module.exports.getProductCategory = async (req, res)=>{
   var products = await Product.find({category: category.name})
   res.json(products)
 }
+module.exports.getProductById = async (req, res) => {
+  var product = await Product.findOne({ _id: req.params.product_id });
+  if (product) {
+    res.json(product);
+  } else {
+    res.json("Khong tim thay");
+  }
+};
+

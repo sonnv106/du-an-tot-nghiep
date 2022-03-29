@@ -85,8 +85,8 @@ module.exports.update = async (req, res) => {
     console.log(cart);
     await cart.save();
     res.json(cart);
-  }else{
-    res.json('erros')
+  } else {
+    res.json("erros");
     return;
   }
 };
