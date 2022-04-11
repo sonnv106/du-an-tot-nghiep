@@ -1,16 +1,30 @@
-extends ../../layouts/common
+extends ../../layouts/navbar-home
 block content
+  div.d-flex.justify-content-between
+    h2 Tạo tài khoản người dùng
   if errors
       each error in errors
         .alert.alert-danger= error
-  form(method="POST")
+  form(method="POST" enctype="multipart/form-data" action = '/users/create')
     .form-group
       label(for="email") Email
       input#email.form-control(type="text", name="email", value = values ? values.email : "")
     .form-group
-      label(for="password") Password
+      label(for="password") Mật khẩu
       input#password.form-control(type="password", name="password", value = values ? values.password : "")
-    form-group
-    label(for="repassword") Re-Password
-    input#repassword.form-control(type="password", name="repassword", value = values ? values.repassword : "")
+    .form-group
+      label(for="repassword") Nhập lại mật khẩu
+      input#repassword.form-control(type="password", name="repassword", value = values ? values.repassword : "")
+    .form-group
+      label(for="name") Tên
+      input#name.form-control(type="text", name="name", value = values ? values.name : "")
+    .form-group
+      label(for="phone") Số điện thoại
+      input#phone.form-control(type="text", name="phone", value = values ? values.phone : "")
+    .form-group
+      label(for="address") Địa chỉ
+      input#address.form-control(type="text", name="address", value = values ? values.address : "")
+    .form-group
+      label(for="avatar") Ảnh
+      input#avatar.form-control(type="file", name="avatar")
     button.btn.btn-primary.mt-1 Create

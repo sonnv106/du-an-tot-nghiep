@@ -4,26 +4,30 @@ var User = require("../../models/user.model");
 var Cart = require("../../models/cart.model");
 
 var jwt = require("jsonwebtoken");
-
+// lay gio hang
 module.exports.getCart = async (req, res) => {
   var user_id = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET).id;
   var cart = await Cart.findOne({ user_id: user_id });
   res.json(cart);
 };
+//them mot sp vao gio hang
 module.exports.addToCart = async (req, res) => {
   var product_id = req.params.id;
   var amount = req.body.amount;
   var decode = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET);
 
   var product = await Product.findOne({ _id: product_id });
-
   var user_id = decode.id;
   //tim gio hang cua user
   var cart = await Cart.findOne({ user_id: user_id });
+  if(!cart){
+    
+  }
   //tim san pham duy nhat
   var product_only = cart.products.find((item) => {
     return item.product_id === product_id;
   });
+ 
   if (amount > product.quantily) {
     res.json("So luong dat hang lon hon so luong trong kho");
     return;

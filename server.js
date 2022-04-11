@@ -30,6 +30,9 @@ var productRouter = require("./routes/product.route");
 var authRouter = require('./routes/auth.route');
 var userRouter = require('./routes/user.route');
 var cartRouter = require('./routes/cart.route');
+var billRouter = require('./routes/bill.route');
+var categoryRouter = require('./routes/category.route');
+
 
 var apiUser = require("./api/routes/user.route");
 var apiProduct = require("./api/routes/product.route");
@@ -69,9 +72,10 @@ app.use("/api/bills", apiBill);
 //   next();
 // });
 app.use("/products", productRouter);
-app.use('/', authRouter);
-app.use('/users', userRouter);
+app.use('/', userRouter);
 app.use('/cart', cartRouter)
+app.use('/bills', billRouter)
+app.use('/categories', categoryRouter)
 
 //User
 // listen for requests :)

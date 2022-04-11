@@ -1,0 +1,22 @@
+extends ../layouts/navbar-home.pug
+block content
+  div.d-flex.justify-content-between
+    h2 Tài khoản
+    a.btn.btn-success(href="/users/create") Tạo tài khoản
+  table(style='')
+    tr
+      th Ảnh
+      th Tên
+      th Email
+      th Số điện thoại
+      th Action
+    each user in users
+      tr
+        td
+          image(src= user.avatar style='width: 60; height: 60')
+        td= user.name
+        td= user.email
+        td= user.phone
+        td 
+          a(href='/users/update/'+user.id).btn.btn-primary Sửa
+          a(href='/users/delete/'+user.id).btn.btn-danger Xóa

@@ -1,0 +1,21 @@
+extends ../../layouts/navbar-home.pug
+block content
+  
+  h2 Danh mục sản phẩm
+  table(style='')
+    tr
+      th Hình ảnh
+      th Tên danh mục
+      th Vị trí 
+      th Chi tiết
+      th Action
+    each category in categories
+      tr
+        td
+          image(src= category.image style='width: 32; height: 32')
+        td= category.name
+        td= category.postion
+        td= category.detail
+        td 
+          a(href='/category/update/'+category.id).btn.btn-primary Sửa
+          a(href='/category/delete/'+category.id).btn.btn-danger Xóa

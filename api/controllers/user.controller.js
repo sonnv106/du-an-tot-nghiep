@@ -6,6 +6,7 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 var User = require("../../models/user.model");
 var Product = require("../../models/product.model");
+var Cart = require("../../models/cart.model");
 const shortid = require("shortid");
 
 //lay tat ca thong tin
@@ -143,6 +144,14 @@ module.exports.login = async (req, res, next) => {
   } else {
     bcrypt.compare(password, user.password, async (err, result) => {
       if (result) {
+        var cart = await Cart.findOne({user_id: user._id})
+        if(!cart){
+          await Cart.create({
+            user_id: user.id,
+            products: [],
+            total: 0
+          })
+        }
         res.json({ token: user.token });
         next();
       } else {

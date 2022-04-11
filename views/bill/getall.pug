@@ -1,0 +1,20 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h2 Đơn đặt hàng
+  table(style='')
+    tr
+      th Mã
+      th Ngày đặt hàng
+      th Tên người đặt
+      th Tổng tiền
+      th Trạng thái thanh toán
+      th Trang thái đơn hàng
+    each bill in bills
+      tr
+        td= bill.id
+        td= bill.date
+        td= bill.username
+        td= bill.total
+        td= bill.payment_status ? "Đã thanh toán" : "Chưa thanh toán"
+        td
+          a(href="/bills/confirm/"+bill.id).btn.btn-danger= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
