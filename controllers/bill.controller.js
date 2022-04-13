@@ -11,6 +11,7 @@ module.exports.getall = async (req, res)=>{
   })
 }
 module.exports.confirm = async (req, res)=>{
+  console.log(req.cookies.token)
   var user_id = jwt.verify(req.cookies.token, process.env.ACCESS_TOKEN_SECRET).id;
   var id = req.params.id;
   var bill = await Bill.findOne({_id: id});
@@ -23,7 +24,7 @@ module.exports.confirm = async (req, res)=>{
     await product.save()
   }
   bill.bill_status = true;
+  bill.transporting = true;
   await bill.save();
-  res.json("Thành công và chờ người vận chuyển")
   res.redirect('/bills');
 }

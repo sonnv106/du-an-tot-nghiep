@@ -7,7 +7,7 @@ var jwt = require("jsonwebtoken");
 
 module.exports.get = async (req, res) => {
 
-  var user_id = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET).id;
+  var user_id = jwt.verify(req.params.token, process.env.ACCESS_TOKEN_SECRET).id;
   var bill = await Bill.findOne({ user_id: user_id });
   res.json(bill);
 };
@@ -33,6 +33,7 @@ module.exports.add = async (req, res) => {
     payment_type: "Tiền mặt", //kiểu thanh toán
     payment_status: false, // tình trạng thanh toán
     bill_status: false, //Tình trạng đơn hàng
+    transporting: false, // trang thái vận chuyển
     verifier: "", // người xác nhận hóa đơn
     transporter: null, //người vận chuyển
     start_at: null, //Khởi hành lúc nào
@@ -78,5 +79,10 @@ module.exports.confirm = async (req, res)=>{
   }
   bill.bill_status = true;
   await bill.save();
-  res.redirect('/bills');
+ 
+};
+module.exports.transporting = async (req, res)=>{
+  var user_id = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET).id;
+  var bill = await Bill.findOne({ _id: req.body.bill_id });
+  console.log(bill)
 }

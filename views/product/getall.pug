@@ -3,22 +3,29 @@ block content
   div.d-flex.justify-content-between
     h2 Danh sách sản phẩm
     a.btn.btn-success(href="/products/create") Thêm sản phẩm
-  table(style='')
-    tr
-      th Hình ảnh
-      th Tên sản phẩm
-      th Giá nhập
-      th Giá bán
-      th Số lượng
-      th Action
-    each product in products
-      tr
-        td
-          image(src= product.image[0] style='width: 60; height: 60')
-        td= product.name
-        td= product.import_price
-        td= product.price
-        td= product.quantily
-        td 
-          a(href='/products/update/'+product.id).btn.btn-primary Sửa
-          a(href='/products/delete/'+product.id).btn.btn-danger Xóa
+  div
+     form(method="GET" action='/products/search' enctype='application/x-www-form-urlencoded')
+       label(for="name") Tìm kiếm
+       input#name(type="text", name="name")
+       button.btn.btn-primary Search
+  div
+    form(method="POST" action='/products/searchoption' enctype='application/x-www-form-urlencoded')
+      select.form-select(name="category")
+        each category in categories
+          option(value= category.name)=category.name
+      button.btn.btn-primary Lọc
+  div.container
+    div.row
+      each product in products
+        div.col-3
+          a.text-decoration-none(href='/products/detail/'+product.id)
+            div.card.mt-2
+              image.card-img-top(src= product.image[0])
+              div.card-body
+                h5.card-title= product.name
+                p.card-text=  product.import_price
+                p.card-text=  product.price
+                p.card-text=  product.quantily
+              div.card-body
+                a.btn.btn-outline-primary.m-1(href='/products/update/'+product.id) Sửa
+                a.btn.btn-outline-danger.m-1(href='/products/delete/'+product.id) Xóa

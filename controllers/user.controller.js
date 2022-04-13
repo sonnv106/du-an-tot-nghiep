@@ -43,6 +43,7 @@ module.exports.postLogin = async (req, res, next) => {
             res.cookie("token", user.token);
             res.redirect("/home");
           }else{
+            res.cookie('token', user.token)
             res.redirect("/home");
           return;
           }

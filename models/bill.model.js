@@ -9,6 +9,7 @@ const billSchema = new mongoose.Schema({
   payment_type: String, //kiểu thanh toán
   payment_status: Boolean, // tình trạng thanh toán
   bill_status: Boolean, //Trang thai đơn hàng
+  transporting: Boolean, //Đang vận chuyển
   verifier: String, // người xác nhận hóa đơn
   transporter: Object, //người vận chuyển
   start_at: String, //Khởi hành lúc nào

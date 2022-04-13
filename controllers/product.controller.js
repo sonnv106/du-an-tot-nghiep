@@ -90,11 +90,10 @@ module.exports.getDetailProduct = async (req, res, next) => {
 
 module.exports.getall = async (req, res) => {
   var products = await Product.find();
-  var decode = jwt.verify(req.cookies.token, process.env.ACCESS_TOKEN_SECRET);
-  var user = await User.findOne({ email: decode.email });
+  var categories = await Category.find();
   res.render("product/getall", {
     products: products,
-    user: user,
+    categories: categories,
   });
 };
 module.exports.getupdate = async (req, res) => {
@@ -133,11 +132,11 @@ module.exports.postupdate = async (req, res) => {
     (product.quantily = req.body.quantily), //soluong
     (product.category = req.body.category),
     (product.image = urls),
-    console.log(product)
-    await product.save();
-    res.redirect("/products/getall");
+    console.log(product);
+  await product.save();
+  res.redirect("/products/getall");
 };
-module.exports.deleteProduct = async (req, res)=>{
+module.exports.deleteProduct = async (req, res) => {
   var id = req.params.id;
   var product = await Product.findOne({ _id: id });
   if (!product) {
@@ -147,4 +146,32 @@ module.exports.deleteProduct = async (req, res)=>{
     res.redirect("/products/getall");
     console.log("Delete success!");
   }
-}
+};
+module.exports.search = async (req, res) => {
+  var query = req.query.name;
+  var products = await Product.find();
+  var categories = await Category.find()
+  var productQuery = products.filter((item) => {
+    return item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  });
+  if (productQuery) {
+    res.render("product/getall", {
+      products: productQuery,
+      categories: categories
+    });
+  } else {
+    res.render("product/getall", {
+      products: products,
+      categories: categories
+    });
+  }
+};
+module.exports.filter = async (req, res) => {
+  var category = req.body.category;
+  var categories = await Category.find()
+  var products = await Product.find({ category: category });
+  res.render("product/getall", {
+    products: products,
+    categories: categories
+  });
+};
