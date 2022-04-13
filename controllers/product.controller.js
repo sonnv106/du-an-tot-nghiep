@@ -91,9 +91,19 @@ module.exports.getDetailProduct = async (req, res, next) => {
 module.exports.getall = async (req, res) => {
   var products = await Product.find();
   var categories = await Category.find();
+  
+  var page = parseInt(req.query.page) || 1;
+  var perPage = 8;
+  var start = (page - 1) * perPage;
+  var end = page * perPage;
+  var countProducts = products.length;
+  
+  console.log(Math.ceil(countProducts / perPage))
   res.render("product/getall", {
-    products: products,
+    products: products.slice(start, end),
     categories: categories,
+    currentPage: page,
+    pages: Math.ceil(countProducts / perPage)
   });
 };
 module.exports.getupdate = async (req, res) => {
@@ -151,13 +161,22 @@ module.exports.search = async (req, res) => {
   var query = req.query.name;
   var products = await Product.find();
   var categories = await Category.find()
+  
+  var page = parseInt(req.query.page) || 1;
+  var perPage = 8;
+  var start = (page - 1) * perPage;
+  var end = page * perPage;
+  var countProducts = products.length;
+  
   var productQuery = products.filter((item) => {
     return item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1;
   });
   if (productQuery) {
     res.render("product/getall", {
       products: productQuery,
-      categories: categories
+      categories: categories,
+      currentPage: page,
+    pages: Math.ceil(countProducts / perPage)
     });
   } else {
     res.render("product/getall", {

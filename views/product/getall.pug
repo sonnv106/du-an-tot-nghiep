@@ -4,16 +4,16 @@ block content
     h2 Danh sách sản phẩm
     a.btn.btn-success(href="/products/create") Thêm sản phẩm
   div
-     form(method="GET" action='/products/search' enctype='application/x-www-form-urlencoded')
-       label(for="name") Tìm kiếm
-       input#name(type="text", name="name")
-       button.btn.btn-primary Search
+    form(method="GET" action='/products/search' enctype='application/x-www-form-urlencoded')
+      label(for="name") Tìm kiếm
+      input#name(type="text", name="name")
+      button.btn.btn-primary Search
   div
     form(method="POST" action='/products/searchoption' enctype='application/x-www-form-urlencoded')
-      select.form-select(name="category")
-        each category in categories
-          option(value= category.name)=category.name
-      button.btn.btn-primary Lọc
+        select.form-select(name="category")
+          each category in categories
+            option(value= category.name)=category.name
+        button.btn.btn-primary Lọc
   div.container
     div.row
       each product in products
@@ -29,3 +29,14 @@ block content
               div.card-body
                 a.btn.btn-outline-primary.m-1(href='/products/update/'+product.id) Sửa
                 a.btn.btn-outline-danger.m-1(href='/products/delete/'+product.id) Xóa
+  div.row.mt-3
+      if pages>0
+        nav.mx-auto
+          ul.pagination.justify-content-center
+            - var i = 1
+            while i<= pages
+              li.page-item
+                if i===page
+                  a.page-link.disabled(href="/products/getall"+"?page="+i)= i++
+                else 
+                  a.page-link(href="/products/getall"+"?page="+i)= i++
