@@ -136,11 +136,12 @@ module.exports.login = async (req, res, next) => {
   var user = await User.findOne({ email: email });
 
   if (!user) {
-    res.json({ status: "Tai khoan khong ton tai" });
+    res.status(404).send("Sorry can't find user!")
     return;
   }
   if (!user.active) {
-    res.json({ status: "Tai khoan chua kich hoat" });
+    res.status(404).send("account is not active!")
+    return;
   } else {
     bcrypt.compare(password, user.password, async (err, result) => {
       if (result) {
@@ -155,8 +156,7 @@ module.exports.login = async (req, res, next) => {
         res.json({ token: user.token });
         next();
       } else {
-        res.status(403).json("Sai mat khau");
-
+        res.status(404).send("Wrong password")
         return;
       }
     });

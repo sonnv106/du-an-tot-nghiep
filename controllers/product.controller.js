@@ -85,7 +85,6 @@ module.exports.getDetailProduct = async (req, res, next) => {
   res.render("product/product-detail", {
     product: product,
   });
-  next();
 };
 
 module.exports.getall = async (req, res) => {

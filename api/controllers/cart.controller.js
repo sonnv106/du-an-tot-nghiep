@@ -95,6 +95,7 @@ module.exports.update = async (req, res) => {
     return;
   }
 };
+//xóa sản phảm trong giỏ hàng
 module.exports.delete = async (req, res) => {
   if (!req.body.token) {
     res.json("errors. not permission");

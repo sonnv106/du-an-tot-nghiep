@@ -30,3 +30,11 @@ module.exports.confirm = async (req, res)=>{
   await bill.save();
   res.redirect('/bills');
 }
+module.exports.detailBill = async (req, res)=>{
+  var bill_id = req.params.id;
+  var bill = await Bill.findOne({_id: bill_id});
+  console.log(bill)
+  res.render('bill/detail',{
+    bill: bill
+  })
+}

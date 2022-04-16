@@ -1,0 +1,44 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h3.text-center.pb-5 Chi tiết đơn đặt hàng
+  div.container
+    div.d-flex
+      b.d-flex.mx-1
+        p= 'Mã đơn hàng: '
+      span= bill._id
+    div.d-flex
+      b.d-flex.mx-1
+        p= 'Tên người mua: '
+      span= bill.username
+    div.d-flex
+      b.d-flex.mx-1
+        p= 'Địa chỉ: '
+      span= bill.user_address
+    div.d-flex
+      b.d-flex.mx-1
+        p= 'Số điện thoại: '
+      span= bill.phone
+    div.d-flex
+      b.d-flex.mx-1
+        p= 'Trạng thái hóa đơn: '
+      span= bill.bill_status? 'Đã xác nhận': 'Chưa xác nhận'
+    div.d-flex
+      b.d-flex.mx-1
+        p= 'Trạng thái giao hàng: '
+      span= bill.transporting? "Đang giao": 'Chưa giao hàng'
+    div.d-flex
+      b.d-flex.mx-1
+        p= 'Tổng tiền: '
+      h5= bill.total + 'đ'
+    table(style='')
+      tr
+        th Sản phẩm
+        th Đơn giá
+        th Số lượng
+        th Thành tiền
+      each product in bill.products
+        tr
+          td= product.product_name
+          td= product.price
+          td= product.amount
+          td= product.price*product.amount

@@ -18,3 +18,4 @@ block content
         td= bill.payment_status ? "Đã thanh toán" : "Chưa thanh toán"
         td
           a(href="/bills/confirm/"+bill.id).btn.btn-danger= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
+          a(href="/bills/detail/"+bill.id).btn.btn-primary Chi tiết

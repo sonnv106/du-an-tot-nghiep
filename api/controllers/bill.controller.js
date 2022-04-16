@@ -16,10 +16,11 @@ module.exports.get = async (req, res) => {
 // Tạo đơn đặt hàng
 module.exports.add = async (req, res) => {
   var user_id = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET).id;
-  var address = req.body.address;
-  var phone = req.body.phone;
-  var email = req.body.email;
-  var username = req.body.name ? req.body.name : user_id.email;
+  var address = req.params.address;
+  var phone = req.params.phone;
+  var email = req.params.email;
+  var name = req.params.name;
+  
   var cart = await Cart.findOne({ user_id: user_id });
   var user = await User.findOne({ _id: user_id });
 
@@ -28,8 +29,10 @@ module.exports.add = async (req, res) => {
   var data = {
     user_id: user_id, //id người dùng
     date: date.toLocaleDateString(), // ngày ghi hóa đơn, dat hang
-    username: user.name, // tên người dùng
     user_address: address ? address : user.address, //địa chỉ người dùng
+    phone: phone,
+    email: email? email: user.email,
+    username: name, // tên người dùng
     products: cart.products, //danh sách sản phẩm đã đặt
     total: cart.total, // tổng tiền
     payment_type: "Tiền mặt", //kiểu thanh toán
@@ -42,7 +45,7 @@ module.exports.add = async (req, res) => {
     finish_at: "", //Hoàn thành lúc nào
     feedback: "", //Đánh giá
   };
-
+ 
   var bill = await Bill.create(data);
   await Cart.findOneAndRemove({ user_id: user_id });
   await Cart.create({

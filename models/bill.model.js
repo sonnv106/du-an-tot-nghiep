@@ -2,6 +2,8 @@ var mongoose = require ('mongoose');
 const billSchema = new mongoose.Schema({
   user_id: String, //id người dùng
   date: String, // ngày ghi hóa đơn
+  phone: String,
+  email: String,
   username: String, // tên người dùng
   user_address: String,  //địa chỉ người dùng
   products: Array, //danh sách sản phẩm đã đặt

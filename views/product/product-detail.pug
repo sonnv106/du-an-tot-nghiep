@@ -1,17 +1,53 @@
-extends ../../layouts/common
+extends ../../layouts/navbar-home
 block content
   div.detail-product-wrapper
     div
-      img.image-detail-product(src= product.image[1])
+      img.image-detail-product(src= product.image[0])
     div.info-detail-product
       h2= product.name
-      h3= 'Giá ' + product.price
-      p= 'Hạn sử dụng ' +product.date
-      form(action=`/cart/add/${product.id}` method="POST" enctype="application/x-www-form-urlencoded" )
-        #decrease.value-button(onclick='decreaseValue()', value='Decrease Value') -
-        input#amount(type = 'text', name='amount' value='0')
-        #increase.value-button(onclick='increaseValue()', value='Increase Value') +
-        button add
-    
+      h3= 'Giá ' + product.price + 'đ'
+      p= 'Hạn sử dụng: ' +product.date
+      div.d-flex
+        b.d-flex.mx-1
+          p= 'Quy cách: '
+        span= product.packaging
+      div.d-flex
+        b.d-flex.mx-1
+          p= 'Danh mục: '
+        span= product.category
+      div.d-flex
+        b.d-flex.mx-1
+          p= 'Khối lượng: '
+        span= product.weight
+      div.d-flex
+        b.d-flex.mx-1
+          p= 'Bảo quản: '
+        span= product.preserve
+      div.d-flex
+        b.d-flex.mx-1
+          p= 'Nguồn hàng: '
+        span= product.source
+      div.d-flex
+        b.d-flex.mx-2
+          p= 'Quy cách: '
+        span= product.packaging
+      div.d-flex
+        b.d-flex.mx-2
+          p= 'Xuất xứ: '
+        span= product.origin
+      div.d-flex
+        b.d-flex.mx-2
+          p= 'Cảnh báo: '
+        span= product.warning
+      div.d-flex
+        b.d-flex.mx-2
+          p= 'Thành phần: '
+        span= product.ingredients
+      div.d-flex
+        b.d-flex.mx-2
+          p= 'Chi tiết: '
+        span= product.detail
+      
+      
       
       
