@@ -3,6 +3,7 @@ var Cart = require("../../models/cart.model");
 var User = require("../../models/user.model");
 var Cart = require("../../models/cart.model");
 var Product = require("../../models/product.model");
+var History = require('../../models/history.model')
 var jwt = require("jsonwebtoken");
 
 module.exports.get = async (req, res) => {
@@ -10,12 +11,15 @@ module.exports.get = async (req, res) => {
     req.params.token,
     process.env.ACCESS_TOKEN_SECRET
   ).id;
-  var bill = await Bill.findOne({ user_id: user_id });
+  var user = await User.findOne({_id: user_id})
+  var bill = await Bill.find({ user_id: user_id });
+  
   res.json(bill);
 };
 // Tạo đơn đặt hàng
 module.exports.add = async (req, res) => {
   var user_id = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET).id;
+
   var address = req.params.address;
   var phone = req.params.phone;
   var email = req.params.email;
@@ -25,7 +29,8 @@ module.exports.add = async (req, res) => {
   var user = await User.findOne({ _id: user_id });
 
   const date = new Date();
-
+  
+  console.log(user_id)
   var data = {
     user_id: user_id, //id người dùng
     date: date.toLocaleDateString(), // ngày ghi hóa đơn, dat hang
@@ -102,3 +107,39 @@ module.exports.transporting = async (req, res) => {
     return;
   }
 };
+module.exports.complete = async (req, res)=>{
+  var user_id = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET).id;
+  var bill_id = req.params.id;
+  var bill = await Bill.findOne({ _id: bill_id });
+  const date = new Date();
+  if(bill.user_id!==user_id){
+    res.json('errors');
+    return;
+    
+  }else{
+    bill.payment_status =true
+    bill.finish_at = date.toLocaleString();
+    await bill.save();
+    var data_bill = {
+      user_id: bill.user_id, //id người dùng
+      date: bill.date, // ngày ghi hóa đơn
+      phone: bill.phone,
+      email: bill.email,
+      username: bill.username, // tên người dùng
+      user_address: bill.user_address,  //địa chỉ người dùng
+      products: bill.products, //danh sách sản phẩm đã đặt
+      total: bill.total, // tổng tiền
+      payment_type: bill.payment_type, //kiểu thanh toán
+      payment_status: bill.payment_status, // tình trạng thanh toán
+      bill_status: bill.bill_status, //Trang thai đơn hàng
+      transporting: bill.transporting, //Đang vận chuyển
+      verifier: bill.verifier, // người xác nhận hóa đơn
+      transporter: bill.transporter, //người vận chuyển
+      start_at: bill.start_at, //Khởi hành lúc nào
+      finish_at: bill.finish_at, //Hoàn thành lúc nào
+      feedback: bill.feedback,
+    }
+    await History.create(data_bill);
+    res.json(bill)
+  }
+}

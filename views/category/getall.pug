@@ -1,6 +1,5 @@
 extends ../../layouts/navbar-home.pug
 block content
-  
   h2 Danh mục sản phẩm
   table(style='')
     tr
@@ -16,6 +15,6 @@ block content
         td= category.name
         td= category.postion
         td= category.detail
-        td 
-          a(href='/category/update/'+category.id).btn.btn-primary Sửa
-          a(href='/category/delete/'+category.id).btn.btn-danger Xóa
+        td.d-flex 
+          a(href='/categories/update/'+category.id).btn.btn-primary Sửa
+          a(href='/categories/delete/'+category.id).btn.btn-danger Xóa

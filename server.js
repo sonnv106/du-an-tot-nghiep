@@ -32,6 +32,7 @@ var userRouter = require('./routes/user.route');
 var cartRouter = require('./routes/cart.route');
 var billRouter = require('./routes/bill.route');
 var categoryRouter = require('./routes/category.route');
+var statisticalRouter = require('./routes/statistical.route')
 
 
 var apiUser = require("./api/routes/user.route");
@@ -60,6 +61,7 @@ app.use("/api/users", apiUser);
 app.use("/api/categories",apiCategory);
 app.use("/api/cart", apiCart);
 app.use("/api/bills", apiBill);
+
 // //routes
 // app.use("/users", authMiddleware.requireAuth, userRouter);
 // app.use("/books", authMiddleware.requireAuth,bookRouter);
@@ -76,6 +78,7 @@ app.use('/', userRouter);
 app.use('/cart', cartRouter)
 app.use('/bills', billRouter)
 app.use('/categories', categoryRouter)
+app.use('/statistical',statisticalRouter )
 
 //User
 // listen for requests :)

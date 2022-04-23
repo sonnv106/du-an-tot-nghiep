@@ -1,0 +1,17 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h2 Cập nhật sản phẩm
+  form(method="POST" enctype="multipart/form-data")
+    .form-group
+      label(for="name") Tên danh mục
+      input#name.form-control(type="text", name="name", value = category.name ? category.name : "")
+    .form-group
+      label(for="image") Ảnh minh họa
+      input#image.form-control(type="file", name="image" accept='image/*' multiple)
+    .form-group
+      label(for="detail") Chi tiết
+      input#detail.form-control(type="text", name="detail", value = category.detail ? category.detail : "")
+    .form-group
+      label(for="import_price") Vị trí kho hàng
+      input#import_price(type="text", name="import_price", value = category.postion ? category.postion : "")    
+    button.btn.btn-primary.mt-1 Cập nhật

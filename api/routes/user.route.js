@@ -25,4 +25,8 @@ router.get('/favorite', controller.getFavoriteProduct)
 
 router.post('/favorite/add', controller.addFavoriteProduct)
 
+router.get('/:token', controller.getInfo)
+
+router.post('/update/info/:avatar/:address',  controller.testUpdate)
+
 module.exports = router;

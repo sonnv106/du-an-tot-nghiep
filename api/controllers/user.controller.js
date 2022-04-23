@@ -217,6 +217,7 @@ module.exports.forgotPassword = async (req, res) => {
 // cap nhat thong tin
 module.exports.updateInfo = async (req, res) => {
   var avatar = await cloudinary.uploader.upload(req.file.path);
+  console.log(avatar)
   var decode = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET);
   if (decode) {
     var user = await User.findOne({ email: decode.email });
@@ -286,3 +287,20 @@ module.exports.removeFavoriteProduct = async (req, res) => {
     res.json(user.favorite);
   }
 };
+
+module.exports.getInfo = async (req, res)=>{
+  var user_id = jwt.verify(
+      req.params.token,
+      process.env.ACCESS_TOKEN_SECRET
+    ).id;
+  var user = await User.findOne({_id: user_id});
+  if(user){
+    res.json(user)
+  }else{
+    res.json('errors')
+  }
+  
+}
+module.exports.testUpdate = async (req, res)=>{
+  console.log('hello')
+}

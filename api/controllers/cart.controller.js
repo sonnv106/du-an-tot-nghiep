@@ -115,6 +115,14 @@ module.exports.delete = async (req, res) => {
     }else{
       var index = cart.products.indexOf(product_only);
       cart.products.splice(index, 1);
+      var sum = [];
+      for (var i = 0; i < cart.products.length; i++) {
+        sum.push(cart.products[i].price * cart.products[i].amount);
+      }
+      var total = sum.reduce((a, b) => {
+        return a + b;
+      }, 0);
+      cart.total = total;
       await cart.save();
       res.json(cart)
     }
