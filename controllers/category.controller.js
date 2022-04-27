@@ -33,3 +33,9 @@ module.exports.postUpdate = async (req, res) => {
 module.exports.delete = async (req, res) => {
   res.render();
 };
+module.exports.detailCategory = async (req, res) => {
+  const category_name = req.params.name;
+  console.log(category_name)
+  var products = await Product.find({ category: category_name});
+  res.render("category/list-product", { products: products });
+};

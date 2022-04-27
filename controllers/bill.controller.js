@@ -7,7 +7,7 @@ var jwt = require("jsonwebtoken");
 module.exports.getall = async (req, res)=>{
   var bills = await Bill.find({})
   res.render('bill/getall', {
-    bills: bills
+    bills: bills,
   })
 }
 module.exports.confirm = async (req, res)=>{
@@ -37,4 +37,35 @@ module.exports.detailBill = async (req, res)=>{
   res.render('bill/detail',{
     bill: bill
   })
+}
+module.exports.delete = async (req, res)=>{
+  var bill_id = req.params.id;
+  var bill = await Bill.findOne({ _id: bill_id });
+
+  if (!bill) {
+    return;
+  } else {
+    await Bill.deleteOne({ _id: bill_id });
+    var users = await User.find({});
+    res.redirect("/bills");
+    console.log("Delete success!");
+  }
+}
+module.exports.searchId = async (req, res)=>{
+  var query = req.query.id;
+  var bills = await Bill.find();
+  var billQuery = bills.filter((item) => {
+    return item.id.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  });
+  console.log(billQuery);
+  res.render("bill/getall", { bills: billQuery });
+}
+module.exports.searchDate = async (req, res)=>{
+  var query = req.query.date;
+  var bills = await Bill.find();
+  var billQuery = bills.filter((item) => {
+    return item.date.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  });
+  console.log(billQuery);
+  res.render("bill/getall", { bills: billQuery });
 }

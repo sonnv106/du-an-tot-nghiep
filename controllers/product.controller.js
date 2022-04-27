@@ -74,9 +74,9 @@ module.exports.postCreate = async (req, res, next) => {
     category: req.body.category,
     image: urls,
   };
-  console.log(data);
+  
   await Product.create(data).then((result) => console.log(result));
-  res.redirect("/products");
+  res.redirect("/products/getall");
 };
 module.exports.getDetailProduct = async (req, res, next) => {
   var id = req.params.id;
@@ -193,3 +193,6 @@ module.exports.filter = async (req, res) => {
     categories: categories
   });
 };
+module.exports.hide = async (req, res)=>{
+  
+}

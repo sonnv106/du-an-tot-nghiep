@@ -1,0 +1,19 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h2 Danh sách hàng tồn kho
+    table.table.table-borderless
+      thead
+        tr
+          th Id sản phẩm
+          th Tên sản phẩm
+          th Tồn kho
+      tbody
+        each product in products
+          tr
+            td= product.id
+            td= product.name
+            td= product.quantily
+          
+  
+    
+  

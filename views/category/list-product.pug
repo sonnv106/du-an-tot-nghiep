@@ -1,0 +1,19 @@
+extends ../../layouts/navbar-home.pug
+block content
+  div.d-flex.justify-content-between
+    h2 Danh sách sản phẩm
+  div.container
+    div.row
+      each product in products
+        div.col-3
+          a.text-decoration-none(href='/products/detail/'+product.id)
+            div.card.mt-2
+              image.card-img-top(src= product.image[0])
+              div.card-body
+                h5.card-title= product.name
+                p.card-text=  product.import_price
+                p.card-text=  product.price
+                p.card-text=  product.quantily
+              div.card-body
+                a.btn.btn-outline-primary.m-1(href='/products/update/'+product.id) Sửa
+                a.btn.btn-outline-danger.m-1(href='/products/delete/'+product.id) Xóa

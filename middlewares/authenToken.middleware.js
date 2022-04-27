@@ -1,19 +1,24 @@
-var jwt = require('jsonwebtoken');
+var jwt = require("jsonwebtoken");
+var User = require("../models/user.model");
 
-module.exports =  (req, res, next)=>{
-  const authorizationHeader = req.headers['authorization'];
-  console.log(authorizationHeader)
- 
-  if(!authorizationHeader){
-    res.sendStatus(401);
+module.exports.requireAuth = async (req, res, next) => {
+  if (!req.cookies.token) {
+    res.render("login");
     return;
-  }
-  var decode =  jwt.verify(authorizationHeader, process.env.ACCESS_TOKEN_SECRET)
-  if(decode){
-      console.log(decode)
+  } else {
+    var user_id = jwt.verify(
+      req.cookies.token,
+      process.env.ACCESS_TOKEN_SECRET
+    ).id;
+    var user = await User.findOne({ _id: user_id });
+    if (user.isAdmin) {
+      
       next();
-    }else{
-      return
+    } else {
+      res.render("login", {
+        errors: ["Ban khong co quyen truy cap"],
+      });
+      return;
     }
-  
-}
+  }
+};

@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var User = require("../models/user.model");
 var Cart = require("../models/cart.model");
+var Bill = require("../models/bill.model");
 var bcrypt = require("bcrypt");
 var cloudinary = require("../cloudinary");
 const saltRounds = 10;
@@ -20,8 +21,8 @@ module.exports.home = async (req, res) => {
 };
 
 module.exports.postLogin = async (req, res, next) => {
-  var email = req.body.email;
-  var password = req.body.password;
+  var email = req.body.email.toLowerCase();
+  var password = req.body.password.toLowerCase();
   var user = await User.findOne({ email: email });
   if (!user) {
     res.render("login", {
@@ -33,7 +34,7 @@ module.exports.postLogin = async (req, res, next) => {
     bcrypt.compare(password, user.password, async (err, result) => {
       if (result) {
         if (user.isAdmin) {
-          if(!user.token){
+          if (!user.token) {
             const token = jwt.sign(
               { id: user._id, email: email },
               process.env.ACCESS_TOKEN_SECRET
@@ -42,29 +43,15 @@ module.exports.postLogin = async (req, res, next) => {
             await user.save();
             res.cookie("token", user.token);
             res.redirect("/home");
-          }else{
-            res.cookie('token', user.token)
+          } else {
+            res.cookie("token", user.token);
             res.redirect("/home");
-          return;
+            return;
           }
         } else {
-          res.render('login',{
-            errors: ["Ban khong co quyen truy cap"]
-          })
-          // if (!user.token) {
-          //   const token = jwt.sign(
-          //     { id: user._id, email: email },
-          //     process.env.ACCESS_TOKEN_SECRET
-          //   );
-          //   user.token = token;
-          //   await user.save();
-          //   res.cookie("token", user.token);
-          //   res.redirect("/home");
-          //   return;
-          // } else {
-          //   res.redirect("/home");
-          //   return;
-          // }
+          res.render("login", {
+            errors: ["Ban khong co quyen truy cap"],
+          });
         }
       }
       res.render("login", {
@@ -121,14 +108,14 @@ module.exports.postCreateUser = async (req, res, next) => {
       permission: "KH",
       favorite: [],
     };
-    
+
     User.create(data);
 
     var hashEmail = bcrypt.hashSync(req.body.email, saltRounds);
 
     var link = "https://flying-blossom-cerise.glitch.me/users/verify/" + email;
 
-    res.send('Vui long kiem tra email de kich hoat')
+    res.send("Vui long kiem tra email de kich hoat");
 
     const msg = {
       to: req.body.email, // Change to your recipient
@@ -249,5 +236,39 @@ module.exports.updateInfoOfUser = async (req, res) => {
     res.redirect("/home");
   } else {
     return;
+  }
+};
+//
+module.exports.detailBillUser = async (req, res) => {
+  var user_id = req.params.id;
+  var bills = await Bill.find({ user_id: user_id });
+  res.render("bill/user-detail", {
+    bills: bills,
+  });
+};
+module.exports.search = async (req, res) => {
+  var query = req.query.name;
+  var users = await User.find();
+  var userQuery = users.filter((item) => {
+    return item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  });
+  console.log(userQuery);
+  res.render("home", { users: userQuery });
+};
+module.exports.logout = async (req, res) => {
+  if (!req.cookies.token) {
+    res.render("login");
+  } else {
+    var user_id = jwt.verify(
+      req.cookies.token,
+      process.env.ACCESS_TOKEN_SECRET
+    ).id;
+    var user = await User.findOne({ _id: user_id });
+    if (user.isAdmin) {
+      res.clearCookie("token");
+      res.render("login");
+    } else {
+      return;
+    }
   }
 };

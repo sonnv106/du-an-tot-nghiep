@@ -1,0 +1,20 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h1 Danh sách khách hàng vàng
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th Id
+          th Tên khách hàng
+          th Email
+          th Địa chỉ
+          th Tổng tiền
+      tbody
+        each customer in customers
+          tr
+            td= customer.id
+            td= customer.username
+            td= customer.email
+            td= customer.user_address
+            td= customer.total
+  

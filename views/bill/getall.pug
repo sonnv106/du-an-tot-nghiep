@@ -1,7 +1,19 @@
 extends ../../layouts/navbar-home.pug
 block content
-  h2 Đơn đặt hàng
-  table(style='')
+  div.d-flex.justify-content-between
+    h2 Đơn đặt hàng
+    div.d-flex
+      div
+        form(method="GET" action='/bills/search/date' enctype='application/x-www-form-urlencoded')
+          div.d-flex
+            input#name.flex-grow-1(type="text", name="date" placeholder= "tháng/ngày/năm")
+            button.btn.btn-primary Tìm kiếm
+      div
+        form(method="GET" action='/bills/search/id' enctype='application/x-www-form-urlencoded')
+          div.d-flex
+            input#name.flex-grow-1(type="text", name="id" placeholder= "Nhập mã hóa đơn")
+            button.btn.btn-primary Tìm kiếm
+  table.table.table-hover.table-borderless
     tr
       th Mã
       th Ngày đặt hàng
@@ -9,9 +21,10 @@ block content
       th Số điện thoại
       th Địa chỉ
       th Tổng tiền
-      th Trạng thái thanh toán
       th Trạng thái giao hàng
+      th Trạng thái thanh toán
       th Trang thái đơn hàng
+      th Active
     each bill in bills
       tr
         td= bill.id
@@ -22,6 +35,8 @@ block content
         td= bill.total
         td= bill.transporting? "Đang giao": 'Đang chờ lấy hàng'
         td= bill.payment_status ? "Đã thanh toán" : "Chưa thanh toán"
-        td.d-flex.justify-content-center
-          a(href="/bills/confirm/"+bill.id).btn.btn-danger= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
+        td
+          a(href="/bills/confirm/"+bill.id).btn.btn-outline-primary= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
+        td.d-flex
           a(href="/bills/detail/"+bill.id).btn.btn-primary Chi tiết
+          a(href="/bills/delete/"+bill.id).btn.btn-warning Xóa

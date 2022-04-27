@@ -1,0 +1,27 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h2 Đơn đặt hàng
+  table(style='')
+    tr
+      th Mã
+      th Ngày đặt hàng
+      th Tên người đặt
+      th Số điện thoại
+      th Địa chỉ
+      th Tổng tiền
+      th Trạng thái thanh toán
+      th Trạng thái giao hàng
+      th Trang thái đơn hàng
+    each bill in bills
+      tr
+        td= bill.id
+        td= bill.date
+        td= bill.username
+        td= bill.phone
+        td= bill.user_address
+        td= bill.total
+        td= bill.transporting? "Đang giao": 'Đang chờ lấy hàng'
+        td= bill.payment_status ? "Đã thanh toán" : "Chưa thanh toán"
+        td.d-flex.justify-content-center
+          a(href="/bills/confirm/"+bill.id).btn.btn-danger= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
+          a(href="/bills/detail/"+bill.id).btn.btn-primary Chi tiết

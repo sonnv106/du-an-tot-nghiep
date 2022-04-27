@@ -19,7 +19,7 @@ const productSchema = new Schema({
   detail: String,  //chi tiet
   quantily: Number,  //soluong
   category: String,  
-  image: Array     
+  image: Array,
 });
 
 const Product = mongoose.model("products", productSchema);

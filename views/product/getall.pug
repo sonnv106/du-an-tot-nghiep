@@ -3,17 +3,21 @@ block content
   div.d-flex.justify-content-between
     h2 Danh sách sản phẩm
     a.btn.btn-success(href="/products/create") Thêm sản phẩm
-  div
-    form(method="GET" action='/products/search' enctype='application/x-www-form-urlencoded')
-      label(for="name") Tìm kiếm
-      input#name(type="text", name="name")
-      button.btn.btn-primary Search
-  div
-    form(method="POST" action='/products/searchoption' enctype='application/x-www-form-urlencoded')
-        select.form-select(name="category")
-          each category in categories
-            option(value= category.name)=category.name
-        button.btn.btn-primary Lọc
+  div.d-flex
+    div
+      form(method="GET" action='/products/search' enctype='application/x-www-form-urlencoded')
+        
+        div.d-flex
+          input#name.flex-grow-1(type="text", name="name" placeholder= "Nhập tên sản phẩm")
+          button.btn.btn-primary Search
+    div
+      form(method="POST" action='/products/searchoption' enctype='application/x-www-form-urlencoded')
+          div.d-flex
+            select.form-select(name="category")
+              each category in categories
+                option(value= category.name)=category.name
+            button.btn.btn-primary Lọc
+    
   div.container
     div.row
       each product in products
@@ -28,7 +32,6 @@ block content
                 p.card-text=  product.quantily
               div.card-body
                 a.btn.btn-outline-primary.m-1(href='/products/update/'+product.id) Sửa
-                a.btn.btn-outline-danger.m-1(href='/products/delete/'+product.id) Xóa
   div.row.mt-3
       if pages>0
         nav.mx-auto

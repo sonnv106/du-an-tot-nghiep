@@ -43,6 +43,9 @@ var apiBill = require("./api/routes/bill.route")
 // var authenToken = require("./api/middlewares/authenToken.middleware");
 // app.use(authenToken)
 
+//middlewares
+var middleware = require("./middlewares/authenToken.middleware")
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -73,12 +76,12 @@ app.use("/api/bills", apiBill);
 //   res.locals.csrfToken = req.csrfToken();
 //   next();
 // });
-app.use("/products", productRouter);
+app.use("/products",middleware.requireAuth, productRouter);
 app.use('/', userRouter);
-app.use('/cart', cartRouter)
-app.use('/bills', billRouter)
-app.use('/categories', categoryRouter)
-app.use('/statistical',statisticalRouter )
+app.use('/cart',middleware.requireAuth, cartRouter)
+app.use('/bills',middleware.requireAuth, billRouter)
+app.use('/categories',middleware.requireAuth, categoryRouter)
+app.use('/statistical',middleware.requireAuth, statisticalRouter )
 
 //User
 // listen for requests :)
