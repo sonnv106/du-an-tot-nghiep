@@ -6,14 +6,18 @@ block content
         tr
           th Id sản phẩm
           th Tên sản phẩm
-          th Tồn kho
+          th Số lượng
+          th Giá nhập
+          th Tổng tiền
       tbody
         each product in products
           tr
             td= product.id
             td= product.name
             td= product.quantily
-          
+            td= product.import_price
+            td= product.import_price*product.quantily
+
   
     
   

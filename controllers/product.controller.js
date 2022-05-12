@@ -117,6 +117,7 @@ module.exports.getupdate = async (req, res) => {
 module.exports.postupdate = async (req, res) => {
   var id = req.params.id;
   var product = await Product.findOne({ _id: id });
+  console.log(product)
   var categories = await Category.find();
   const urls = [];
   const files = req.files;
@@ -140,7 +141,7 @@ module.exports.postupdate = async (req, res) => {
     (product.detail = req.body.detail), //chi tiet
     (product.quantily = req.body.quantily), //soluong
     (product.category = req.body.category),
-    (product.image = urls),
+    (product.image = urls.length?urls:product.image),
     console.log(product);
   await product.save();
   res.redirect("/products/getall");
@@ -157,7 +158,7 @@ module.exports.deleteProduct = async (req, res) => {
   }
 };
 module.exports.search = async (req, res) => {
-  var query = req.query.name;
+  var query = req.query.name.trim();
   var products = await Product.find();
   var categories = await Category.find()
   
@@ -168,7 +169,7 @@ module.exports.search = async (req, res) => {
   var countProducts = products.length;
   
   var productQuery = products.filter((item) => {
-    return item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    return item.name.toLowerCase().trim().indexOf(query.toLowerCase()) !== -1;
   });
   if (productQuery) {
     res.render("product/getall", {

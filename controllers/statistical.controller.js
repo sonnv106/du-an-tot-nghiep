@@ -39,6 +39,7 @@ module.exports.index = async (req, res) => {
     doanhThuHomNay: doanhThuHomNay,
   });
 };
+// top sản phẩm bán chạy
 module.exports.top = async (req, res) => {
   var bills = await History.find({ bill_status: true });
   var listProduct = [];
@@ -72,6 +73,7 @@ module.exports.top = async (req, res) => {
     products: result,
   });
 };
+//khách hàng vàng
 module.exports.topcustomer = async (req, res) => {
   var bills = await History.find({ payment_status: true });
   // thu gọn danh sách khách hàng
@@ -101,6 +103,7 @@ module.exports.topcustomer = async (req, res) => {
     customers: customers
   } );
 };
+// hàng tồn kho
 module.exports.inventory=async (req, res)=>{
   var products = await Product.find({})
   products.sort((a,b)=>{

@@ -8,4 +8,5 @@ router.get('/detail/:id', controller.detailBill)
 router.get('/delete/:id', controller.delete)
 router.get('/search/id', controller.searchId)
 router.get('/search/date', controller.searchDate)
+router.get('/search/name', controller.searchName)
 module.exports = router;

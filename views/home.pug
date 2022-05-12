@@ -3,12 +3,17 @@ block content
   div.d-flex.justify-content-between
     h2 Tài khoản
     a.btn.btn-success(href="/users/create") Tạo tài khoản
-  div
-    form(method="GET" action='/users/search' enctype='application/x-www-form-urlencoded')
-      label(for="name") Tìm kiếm
-      div.d-flex
-        input#name.flex-grow-1(type="text", name="name" placeholder = "Nhập tên người dùng")
-        button.btn.btn-primary Tìm kiếm
+  div.d-flex
+    div
+      form(method="GET" action='/users/search' enctype='application/x-www-form-urlencoded')
+        div.d-flex
+          input#name.flex-grow-1(type="text", name="name" placeholder = "Nhập tên người dùng")
+          button.btn.btn-primary Tìm kiếm
+    div
+      form(method="GET" action='/users/searchEmail' enctype='application/x-www-form-urlencoded')
+        div.d-flex
+          input#name.flex-grow-1(type="text", name="email" placeholder = "Nhập email")
+          button.btn.btn-primary Tìm kiếm
   table.table.align-middle.mb-0.bg-white
     thead.bg-light
       tr
@@ -19,13 +24,14 @@ block content
         th Action
     tbody
       each user in users
-        tr
-          td
-            image.rounded-circle(src= user.avatar style='width: 60; height: 60')
-          td= user.name
-          td= user.email
-          td= user.phone
-          td 
-            a(href='/users/update/'+user.id).btn.btn-primary Sửa
-            a(href='/users/delete/'+user.id).btn.btn-danger Xóa
-            a(href='/users/bill/detail/'+user.id).btn.btn-warning Xem
+        if !user.isAdmin
+          tr
+            td
+              image.rounded-circle(src= user.avatar style='width: 60; height: 60')
+            td= user.name
+            td= user.email
+            td= user.phone
+            td 
+              a(href='/users/update/'+user.id).btn.btn-primary Sửa
+              a(href='/users/delete/'+user.id).btn.btn-danger Xóa
+              a(href='/users/bill/detail/'+user.id).btn.btn-warning Xem

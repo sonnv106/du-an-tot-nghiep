@@ -63,8 +63,19 @@ module.exports.searchId = async (req, res)=>{
 module.exports.searchDate = async (req, res)=>{
   var query = req.query.date;
   var bills = await Bill.find();
+  console.log(bills)
   var billQuery = bills.filter((item) => {
     return item.date.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  });
+  console.log(billQuery);
+  res.render("bill/getall", { bills: billQuery });
+}
+module.exports.searchName = async (req, res)=>{
+  var query = req.query.name;
+  var bills = await Bill.find();
+  
+  var billQuery = bills.filter((item) => {
+    return item.username.toLowerCase().indexOf(query.toLowerCase()) !== -1;
   });
   console.log(billQuery);
   res.render("bill/getall", { bills: billQuery });

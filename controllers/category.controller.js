@@ -19,12 +19,14 @@ module.exports.getUpdate = async (req, res) => {
 module.exports.postUpdate = async (req, res) => {
   var id = req.params.id;
   var category = await Category.findOne({ _id: id });
+  console.log(category)
   var image = await cloudinary.uploader.upload(req.file.path);
   var categories = await Category.find();
   category.name = req.body.name;
   category.detail = req.body.detail;
-  category.postion = req.body.position;
+  category.postion = req.body.postion;
   category.image = image.secure_url;
+  console.log(req.body.name, req.body.detail, req.body.postion, image.secure_url)
   await category.save();
   res.render("category/getall", {
     categories: categories,

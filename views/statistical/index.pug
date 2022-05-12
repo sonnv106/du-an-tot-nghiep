@@ -12,12 +12,13 @@ block content
         div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#4568dc, #b06ab3)"}).d-flex.justify-content-center.align-items-center
           h1.text-center.text-white Khách hàng vàng
     div.d-flex
-      b.d-flex.mx-1
-        h2= 'Doanh thu: '
-      h2= doanhThu +' đ'
-    div.d-flex
-      b.d-flex.mx-1
-        h2= 'Doanh thu hôm nay: '
-      h2= doanhThuHomNay +' đ'
+      div.cart.cart-view
+        div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#ffafbd, #ffc3a0)"}).d-flex-column.justify-content-center.align-items-center
+          h1.text-center.text-white Doanh thu tổng
+          h2.text-center.text-white= doanhThu +' đ'
+      div.cart.cart-view
+        div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#ffafbd, #ffc3a0)"}).d-flex-column.justify-content-center.align-items-center
+          h1.text-center.text-white Doanh thu hôm nay
+          h2.text-center.text-white= doanhThuHomNay +' đ'
     
   

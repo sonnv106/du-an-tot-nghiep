@@ -25,7 +25,7 @@ block content
     div.d-flex
       b.d-flex.mx-1
         p= 'Trạng thái giao hàng: '
-      span= bill.transporting? "Đang giao": 'Chưa giao hàng'
+      span= bill.transporting? "Đang giao": bill.payment_status ? "Hoàn thành":"Chờ lấy hàng" 
     div.d-flex
       b.d-flex.mx-1
         p= 'Tổng tiền: '

@@ -71,8 +71,6 @@ module.exports.postCreateUser = async (req, res, next) => {
   var email = req.body.email;
   var password = req.body.password;
   var rePassword = req.body.repassword;
-  var avatar = await cloudinary.uploader.upload(req.file.path);
-  var user = await User.findOne({ email: email });
   if (!(email && password && rePassword)) {
     res.render("user/create", {
       errors: ["Tat ca phai duoc khai bao"],
@@ -80,6 +78,9 @@ module.exports.postCreateUser = async (req, res, next) => {
     });
     return;
   }
+  var avatar = await cloudinary.uploader.upload(req.file.path);
+  var user = await User.findOne({ email: email });
+  
   if (user) {
     res.render("user/create", {
       errors: ["user da ton tai"],
@@ -247,10 +248,10 @@ module.exports.detailBillUser = async (req, res) => {
   });
 };
 module.exports.search = async (req, res) => {
-  var query = req.query.name;
+  var query = req.query.name.trim();
   var users = await User.find();
   var userQuery = users.filter((item) => {
-    return item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    return item.name.toLowerCase().trim().indexOf(query.toLowerCase()) !== -1;
   });
   console.log(userQuery);
   res.render("home", { users: userQuery });
@@ -272,3 +273,12 @@ module.exports.logout = async (req, res) => {
     }
   }
 };
+module.exports.searchEmail = async (req, res)=>{
+  var query = req.query.email.trim();
+  var users = await User.find();
+  var userQuery = users.filter((item) => {
+    return item.email.toLowerCase().trim().indexOf(query.toLowerCase()) !== -1;
+  });
+  console.log(userQuery);
+  res.render("home", { users: userQuery });
+}

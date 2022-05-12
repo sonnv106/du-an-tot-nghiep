@@ -21,6 +21,7 @@ router.get('/users/verify/:email', controller.verifyEmail)
 router.get('/users/bill/detail/:id',middleware.requireAuth,controller.detailBillUser)
 router.get('/users/search',middleware.requireAuth, controller.search);
 router.get('/users/logout',middleware.requireAuth, controller.logout)
+router.get('/users/searchEmail',middleware.requireAuth, controller.searchEmail)
 
 // router.get('/login', controller.getLogin)
 

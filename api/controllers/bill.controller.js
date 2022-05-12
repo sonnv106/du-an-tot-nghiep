@@ -118,6 +118,7 @@ module.exports.complete = async (req, res)=>{
     
   }else{
     bill.payment_status =true
+    bill.transporting=false
     bill.finish_at = date.toLocaleString();
     await bill.save();
     var data_bill = {

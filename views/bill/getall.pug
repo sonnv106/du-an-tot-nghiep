@@ -9,14 +9,15 @@ block content
             input#name.flex-grow-1(type="text", name="date" placeholder= "tháng/ngày/năm")
             button.btn.btn-primary Tìm kiếm
       div
-        form(method="GET" action='/bills/search/id' enctype='application/x-www-form-urlencoded')
+        form(method="GET" action='/bills/search/name' enctype='application/x-www-form-urlencoded')
           div.d-flex
-            input#name.flex-grow-1(type="text", name="id" placeholder= "Nhập mã hóa đơn")
+            input#name.flex-grow-1(type="text", name="name" placeholder= "Nhập tên khách hàng")
             button.btn.btn-primary Tìm kiếm
   table.table.table-hover.table-borderless
     tr
       th Mã
       th Ngày đặt hàng
+      th Ngày giao hàng
       th Tên người đặt
       th Số điện thoại
       th Địa chỉ
@@ -24,16 +25,17 @@ block content
       th Trạng thái giao hàng
       th Trạng thái thanh toán
       th Trang thái đơn hàng
-      th Active
+      th 
     each bill in bills
       tr
         td= bill.id
         td= bill.date
+        td= bill.finish_at
         td= bill.username
         td= bill.phone
         td= bill.user_address
         td= bill.total
-        td= bill.transporting? "Đang giao": 'Đang chờ lấy hàng'
+        td= bill.transporting? "Đang giao": bill.payment_status ? "Hoàn thành":"Chờ lấy hàng"  
         td= bill.payment_status ? "Đã thanh toán" : "Chưa thanh toán"
         td
           a(href="/bills/confirm/"+bill.id).btn.btn-outline-primary= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"

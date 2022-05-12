@@ -20,7 +20,7 @@ block content
         td= bill.phone
         td= bill.user_address
         td= bill.total
-        td= bill.transporting? "Đang giao": 'Đang chờ lấy hàng'
+        td= bill.transporting ? "Đang giao": bill.payment_status ? "Hoàn thành":"Chờ lấy hàng"  
         td= bill.payment_status ? "Đã thanh toán" : "Chưa thanh toán"
         td.d-flex.justify-content-center
           a(href="/bills/confirm/"+bill.id).btn.btn-danger= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
