@@ -35,16 +35,10 @@ module.exports.postCreate = async (req, res, next) => {
 
   var errors = [];
   if (!req.body.name) {
-    errors.push("Name is required");
+    errors.push("Tên phải được khai báo");
   }
-  if (!req.body.import_price) {
-    errors.push("import_price is required");
-  }
-  if (!req.body.price) {
-    errors.push("price is required");
-  }
-  if (!req.body.quantily) {
-    errors.push("quantily is required");
+  if (!req.body.ingredients) {
+    errors.push("Thành phần phải được khai báo");
   }
 
   if (errors.length) {
@@ -59,18 +53,13 @@ module.exports.postCreate = async (req, res, next) => {
   var data = {
     name: req.body.name,
     packaging: req.body.packaging, //quy cach
-    import_price: parseInt(req.body.import_price), //gia nhap
-    price: parseInt(req.body.price),
     ingredients: req.body.ingredients, //thanhphan
-    weight: req.body.weight,
-    date: req.body.date,
     preserve: req.body.preserve, // bao quan
     source: req.body.source,
     certificate: req.body.certificate, //chung chi
     warning: req.body.warning,
     origin: req.body.origin,
     detail: req.body.detail, //chi tiet
-    quantily: req.body.quantily, //soluong
     category: req.body.category,
     image: urls,
   };
@@ -97,7 +86,6 @@ module.exports.getall = async (req, res) => {
   var end = page * perPage;
   var countProducts = products.length;
   
-  console.log(Math.ceil(countProducts / perPage))
   res.render("product/getall", {
     products: products.slice(start, end),
     categories: categories,

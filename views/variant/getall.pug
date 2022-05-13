@@ -1,0 +1,23 @@
+extends ../../layouts/navbar-home.pug
+block content
+  div.d-flex
+    div
+      form(method="GET" action='/products/search' enctype='application/x-www-form-urlencoded')
+        
+        div.d-flex
+          input#name.flex-grow-1(type="text", name="name" placeholder= "Nhập tên sản phẩm")
+          button.btn.btn-primary Search
+  div.container
+    div.row
+      each variant in variants
+        div.col-3
+          a.text-decoration-none(href='/variant/detail/'+variant.id)
+            div.card.mt-2
+              image.card-img-top(src= variant.image[0])
+              div.card-body
+                h5.card-title= variant.name
+                p.card-text= 'Giá nhập: '+ variant.import_price +'đ'
+                p.card-text=  'Giá bán: ' +variant.price +'đ' 
+                p.card-text= 'Số lượng: ' +variant.amount 
+              div.card-body
+                a.btn.btn-outline-primary.m-1(href='/variant/update/'+variant.id) Sửa

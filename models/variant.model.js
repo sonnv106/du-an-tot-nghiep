@@ -6,14 +6,12 @@ const variantSchema = new Schema({
   size: String,  //kích cỡ
   smell: String, //hương vị 
   color: String,  //màu sắc
-  image: String,
   amount: Number, //số lượng
   mfg: Date,  //ngày sản xuất
   exp: Date, //hạn sử dụng
   measure: String, //đơn vị tính
   import_price: Number,  //gia nhap
   price: Number,
-  date: String, 
   quantily: Number,   
 });
 

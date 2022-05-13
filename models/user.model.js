@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   token: String,
   permission: String,
   favorite: Array,
-  created_date: String
+  date_created: Date,
 })
 var User = mongoose.model('User', userSchema);
 module.exports = User;

@@ -108,6 +108,7 @@ module.exports.postCreateUser = async (req, res, next) => {
       address: req.body.address,
       permission: "KH",
       favorite: [],
+      
     };
 
     User.create(data);

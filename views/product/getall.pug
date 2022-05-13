@@ -27,9 +27,6 @@ block content
               image.card-img-top(src= product.image[0])
               div.card-body
                 h5.card-title= product.name
-                p.card-text= 'Giá nhập: '+ product.import_price +'đ'
-                p.card-text=  'Giá bán: ' +product.price +'đ' 
-                p.card-text= 'Số lượng: ' +product.quantily 
               div.card-body
                 a.btn.btn-outline-primary.m-1(href='/products/update/'+product.id) Sửa
   div.row.mt-3

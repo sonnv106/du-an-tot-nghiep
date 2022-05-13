@@ -6,7 +6,6 @@ block content
     div.info-detail-product
       h2= product.name
       h3= 'Giá ' + product.price + 'đ'
-      p= 'Hạn sử dụng: ' +product.date
       div.d-flex
         b.d-flex.mx-1
           p= 'Quy cách: '
@@ -15,10 +14,6 @@ block content
         b.d-flex.mx-1
           p= 'Danh mục: '
         span= product.category
-      div.d-flex
-        b.d-flex.mx-1
-          p= 'Khối lượng: '
-        span= product.weight
       div.d-flex
         b.d-flex.mx-1
           p= 'Bảo quản: '
@@ -47,7 +42,6 @@ block content
         b.d-flex.mx-2
           p= 'Chi tiết: '
         span= product.detail
-      
-      
+      a.btn.btn-outline-primary.m-1(href='/variant/create/'+product.id) Tạo loại sản phẩm
       
       

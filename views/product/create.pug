@@ -9,28 +9,11 @@ block content
       label(for="name") Tên sản phẩm
       input#name.form-control(type="text", name="name", value = values ? values.name : "")
     .form-group
-      label(for="packaging") Quy cách
-      input#packaging.form-control(type="text", name="packaging", value = values ? values.packaging : "")
-    .form-group
-      label(for="import_price") Giá nhập
-      input#import_price(type="text", name="import_price", value = values ? values.import_price : "")
-      label(for="price") Giá bán
-      input#price(type="text", name="price", value = values ? values.price : "")    
-    .form-group
       label(for="image") Ảnh minh họa
       input#image.form-control(type="file", name="image" accept='image/*' multiple)
     .form-group
-      label(for="quantily") Số lượng
-      input#quantily.form-control(type="text", name="quantily", value = values ? values.quantily : "")
-    .form-group
       label(for="ingredients") Thành phần
       input#ingredients.form-control(type="text", name="ingredients", value = values ? values.ingredients : "")
-    .form-group
-      label(for="weight") Khối lượng tịnh
-      input#weight.form-control(type="text", name="weight", value = values ? values.weight : "")
-    .form-group
-      label(for="date") Hạn sử dụng
-      input#date.form-control(type="text", name="date", value = values ? values.date : "")
     .form-group
       label(for="preserve") Bảo quản
       input#preserve.form-control(type="text", name="preserve", value = values ? values.preserve : "")

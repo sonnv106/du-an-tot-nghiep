@@ -33,7 +33,7 @@ var cartRouter = require('./routes/cart.route');
 var billRouter = require('./routes/bill.route');
 var categoryRouter = require('./routes/category.route');
 var statisticalRouter = require('./routes/statistical.route')
-
+var variantRouter = require('./routes/variant.route')
 
 var apiUser = require("./api/routes/user.route");
 var apiProduct = require("./api/routes/product.route");
@@ -82,7 +82,7 @@ app.use('/cart',middleware.requireAuth, cartRouter)
 app.use('/bills',middleware.requireAuth, billRouter)
 app.use('/categories',middleware.requireAuth, categoryRouter)
 app.use('/statistical',middleware.requireAuth, statisticalRouter )
-
+app.use('/variant', variantRouter )
 //User
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {

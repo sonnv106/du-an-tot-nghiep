@@ -30,9 +30,8 @@ module.exports.createUser = async (req, res, next) => {
   } else {
     //ma hoa mat khau
     var encryptedPassword = bcrypt.hashSync(req.body.password, 10);
-
     var data = {
-      email: req.body.email,
+      email: email.trim(),
       password: encryptedPassword,
       isAdmin: false,
       active: false,
@@ -41,6 +40,8 @@ module.exports.createUser = async (req, res, next) => {
       avatar: "",
       address: "",
       permission: "KH",
+      favorite:[],
+      date_created: new Date()
     };
     var user = await User.create(data);
 
@@ -102,6 +103,7 @@ module.exports.createAdmin = async (req, res, next) => {
       address: "",
       permission: "QL",
       favorite: [],
+      date_created: new Date()
     };
     var user = await User.create(data);
 
@@ -217,7 +219,6 @@ module.exports.forgotPassword = async (req, res) => {
 // cap nhat thong tin
 module.exports.updateInfo = async (req, res) => {
   var avatar = await cloudinary.uploader.upload(req.file.path);
-  console.log(avatar)
   var decode = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET);
   if (decode) {
     var user = await User.findOne({ email: decode.email });
