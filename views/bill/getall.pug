@@ -38,6 +38,25 @@ block content
         td= bill.transporting? "Đang giao": bill.payment_status ? "Hoàn thành":"Chờ lấy hàng"  
         td= bill.payment_status ? "Đã thanh toán" : "Chưa thanh toán"
         td
-          a(href="/bills/confirm/"+bill.id).btn.btn-outline-primary= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
+          a(data-href="/bills/confirm/"+bill.id).btn.btn-outline-primary.confirm= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
         td.d-flex
           a(href="/bills/detail/"+bill.id).btn.btn-primary Chi tiết
+
+  script(src="//cdn.jsdelivr.net/npm/sweetalert2@11")
+  script.
+    [...document.querySelectorAll('a.confirm')].forEach(el => {
+      el.addEventListener('click', e => {
+        Swal.fire({
+          title: 'Bạn có muốn chuyển trạng thái đơn hàng không?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Đồng ý'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.location.href = el.dataset.href
+          }
+        })
+      })
+    })
