@@ -7,14 +7,16 @@ block content
           th Id
           th Tên khách hàng
           th Email
+          th Số điện thoại
           th Địa chỉ
-          th Tổng tiền
+          th Tổng tiền đã mua
       tbody
         each customer in customers
           tr
             td= customer.id
             td= customer.username
             td= customer.email
+            td= customer.phone
             td= customer.user_address
             td= customer.total
   

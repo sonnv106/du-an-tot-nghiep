@@ -32,12 +32,14 @@ block content
       h5= bill.total + 'đ'
     table(style='')
       tr
+        th Mã sản phẩm
         th Sản phẩm
         th Đơn giá
         th Số lượng
         th Thành tiền
       each product in bill.products
         tr
+          td= product.variant_id
           td= product.product_name
           td= product.price
           td= product.amount

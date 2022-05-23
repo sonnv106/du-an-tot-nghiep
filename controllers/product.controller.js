@@ -26,13 +26,8 @@ module.exports.postCreate = async (req, res, next) => {
   var products = await Product.find();
   var categories = await Category.find();
   // var image = await cloudinary.uploader.upload(req.file.path);
-  const urls = [];
-  const files = req.files;
-  for (var file of files) {
-    const path = file.path;
-    const newPath = await cloudinary.uploader.upload(path);
-    urls.push(newPath.secure_url);
-  }
+  var productExists = await Product.findOne({name: req.body.name})
+  
   var errors = [];
   if (!req.body.name) {
     errors.push("Tên phải được khai báo");
@@ -40,7 +35,10 @@ module.exports.postCreate = async (req, res, next) => {
   if (!req.body.ingredients) {
     errors.push("Thành phần phải được khai báo");
   }
-
+  if(productExists){
+    errors.push("Sản phẩm đã tồn tại")
+  }
+  
   if (errors.length) {
     res.render("product/create", {
       errors: errors,
@@ -49,7 +47,13 @@ module.exports.postCreate = async (req, res, next) => {
       categories: categories,
     });
   }
-
+  const urls = [];
+  const files = req.files;
+  for (var file of files) {
+    const path = file.path;
+    const newPath = await cloudinary.uploader.upload(path);
+    urls.push(newPath.secure_url);
+  }
   var data = {
     name: req.body.name,
     packaging: req.body.packaging, //quy cach
@@ -222,7 +226,7 @@ module.exports.createCombo = async (req, res)=>{
     var data = {
       product_id: combo.id,
       image: [...sp1.image,...sp2.image, ...sp3.image],
-      size:'',
+      size: req.body.name,
       smell: '',
       color: '',
       amount: req.body.amount,
@@ -230,7 +234,7 @@ module.exports.createCombo = async (req, res)=>{
       exp: sp1.exp,
       import_price: sp1.import_price*sl1 + sp2.import_price*sl2 + sp3.import_price*sl3,
       price: sp1.price*sl1 + sp2.price*sl2 + sp3.price*sl3 - discount,
-      measure: 'bộ'
+      measure: 'Combo'
     }
     console.log(data)
     await Variant.create(data);
@@ -257,12 +261,14 @@ module.exports.getCreateCombo = async (req, res)=>{
   var variants = await Variant.find();
   var combo = await Product.findOne({name: 'Combo'})
   var listProduct = []
-  for(let variant of variants){
+  for(var variant of variants){
+    console.log(variant.product_id)
     var product = await Product.findOne({_id: variant.product_id})
+    console.log(product)
     var data = {
       variant_id: variant.id,
       product_id: variant.product_id,
-      name: product.name
+      name: product.name + ' ' + variant.size
     }
     listProduct.push(data)
   }

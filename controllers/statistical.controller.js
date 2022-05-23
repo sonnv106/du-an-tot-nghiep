@@ -44,7 +44,7 @@ module.exports.index = async (req, res) => {
 };
 // top sản phẩm bán chạy
 module.exports.top = async (req, res) => {
-  var bills = await Bill.find({ bill_status: true });
+  var bills = await Bill.find({ payment_status: true });
   var listProduct = [];
   for (var i = 0; i < bills.length; i++) {
     for (var j = 0; j < bills[i].products.length; j++) {
@@ -196,8 +196,14 @@ module.exports.statisticalByMonth = async (req, res) => {
   res.render("bill/getall", { bills: billQuery });
 };
 module.exports.expired = async (req, res) => {
-  const products = await Product.find({
-    preserve: { $lte: moment(new Date()).format('YYYY-MM-DD') }
+  const products = await Variant.find({
+    exp: { $lte: moment(new Date()).format('YYYY-MM-DD') }
   })
-  res.render('statistical/expired', { products })
+  var listExpired = []
+  for (var product of products){
+    var findProduct = await Product.findOne({_id: product.product_id})
+    listExpired.push(findProduct)
+  }
+  
+  res.render('statistical/expired', { listExpired })
 }

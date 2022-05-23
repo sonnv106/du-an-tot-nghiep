@@ -14,7 +14,12 @@ module.exports.get = async (req, res) => {
   ).id;
   var user = await User.findOne({_id: user_id})
   var bill = await Bill.find({ user_id: user_id });
-  
+  for(let bi of bill){
+    for(let variant of bi.products){
+      
+    }
+  }
+  console.log(bill)
   res.json(bill);
 };
 // Tạo đơn đặt hàng

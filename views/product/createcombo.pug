@@ -32,7 +32,10 @@ block content
     .form-group
       label(for="sp3") Số tiền muốn giản trên một combo
       input.form-control(type="text", name="discount")   
-    label(for="category") Tên combo
+    .form-group
+      label(for="sp3") Tên combo
+      input.form-control(type="text", name="name")   
+    label(for="category") Combo
     select#sp1.form-select(aria-label='Default select example' name='id')
       option(value = combo.product_id)= combo.name
     button.btn.btn-primary.mt-1 Thêm
