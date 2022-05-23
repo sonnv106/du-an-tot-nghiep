@@ -1,0 +1,51 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h1 Thêm loại sản phẩm
+  if errors
+    each error in errors
+      .alert.alert-danger= error
+  form(method="POST" action='/variant/update/'+variant.id enctype="multipart/form-data" )
+    .form-group
+      label(for="product_id") Mã sản phẩm
+      input#product_id.form-control(type="text", name="product_id", value = variant.product_id ? variant.product_id : "", readonly)
+    .form-group
+      label(for="image") Ảnh minh họa
+      input#image.form-control(type="file", name="image" accept='image/*' multiple value= variant ? variant.image[0]: '')
+    .form-group
+      label(for="size") Size
+      input#size.form-control(type="text", name="size", value = variant ? variant.size : "")
+    .form-group
+      label(for="amount") Số lượng
+      input#amount.form-control(type="text", name="amount", value = variant ? variant.amount : "")
+    .form-group
+      label(for="import_price") Giá nhập
+      input#import_price.form-control(type="text", name="import_price", value = variant ? variant.import_price : "")
+    .form-group
+      label(for="price") Giá bán
+      input#price.form-control(type="text", name="price", value = variant ? variant.price : "")
+    .form-group
+      label(for="mfg") Ngày sản xuất
+      input#mfg.form-control(type="date", name="mfg", value = variant ? variant.mfg : "")
+    .form-group
+      label(for="exp") Hạn sử dụng
+      input#exp.form-control(type="date", name="exp", value = variant ? variant.exp : "")
+      label(for="measure") Đơn vị tính
+    select.form-select(aria-label='Default select example' name='measure')
+        option(value = 'Gói')= 'Gói'
+        option(value = 'Hộp')= 'Hộp'
+        option(value = 'Lọ')= 'Lọ'
+        option(value = 'Chai')= 'Chai'
+        option(value = 'Lốc')= 'Lốc'
+        option(value = 'Thùng')= 'Thùng'
+        option(value = 'Túi')= 'Túi'
+        option(value = 'Chiếc')= 'Chiếc'
+        option(value = 'Viên')= 'Viên'
+        option(value = 'Tá')= 'Tá'
+        option(value = 'Cây')= 'Cây'
+        option(value = 'Que')='Que'
+        option(value = 'Dây')= 'Dây'
+        option(value = 'Bộ')= 'Bộ'
+        option(value ='gram')= "Gram"
+        option(value = 'Kg')= 'Kg'
+        option(value = 'Lon')= 'Lon'
+    button.btn.btn-primary.mt-1 Thêm

@@ -14,6 +14,9 @@ router.get('/delete/:id', controller.deleteProduct)
 router.get('/search', controller.search)
 router.post('/searchoption', controller.filter)
 router.post('/hide', controller.hide)
+
+router.post('/create/combo', controller.createCombo)
+router.get('/create/combo', controller.getCreateCombo)
 // router.post("/", upload.single("image"), controller.postIndex);
 // router.get("/:id/delete", controller.delete);
 // router.get("/:title/update", controller.getUpdate);

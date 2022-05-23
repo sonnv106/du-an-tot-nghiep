@@ -1,6 +1,7 @@
 var Product = require("../../models/product.model");
 var cloudinary = require("../../cloudinary");
 var Category = require("../../models/category.model");
+var Variant = require('../../models/variant.model')
 
 module.exports.getAll = async function(req, res) {
   var products = await Product.find();
@@ -49,4 +50,37 @@ module.exports.getProductById = async (req, res) => {
     res.json("Khong tim thay");
   }
 };
-
+module.exports.getDetail = async (req, res)=>{
+  var id= req.params.id;
+  console.log(id)
+  var product = await Product.findOne({_id: id})
+  var variants = await Variant.find({product_id: id})
+  var data = [];
+  for(var variant of variants){
+    var object = {
+      _id:variant.id,
+      product_id: variant.product_id,
+      image: variant.image,
+      name: product.name,
+      size: variant.size,
+      smell: variant.smell,
+      color: variant.color,
+      amount: variant.amount,
+      mfg: variant.mfg,
+      exp: variant.exp,
+      measure: variant.measure,
+      import_price: variant.import_price,
+      price: variant.price,
+      ingredients: product.ingredients,
+      preserve: product.preserve,
+      soure: product.soure,
+      certificate: product.certificate,
+      warning: product.warning,
+      origin: product.origin,
+      detail: product.detail,
+      category: product.category
+    }
+      data.push(object)
+  }
+  res.json(data)
+}

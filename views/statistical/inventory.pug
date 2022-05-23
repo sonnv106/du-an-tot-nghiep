@@ -6,6 +6,7 @@ block content
         tr
           th Id sản phẩm
           th Tên sản phẩm
+          th Hạn sử dụng
           th Số lượng
           th Giá nhập
           th Tổng tiền
@@ -14,9 +15,10 @@ block content
           tr
             td= product.id
             td= product.name
-            td= product.quantily
+            td= product.exp
+            td= product.amount
             td= product.import_price
-            td= product.import_price*product.quantily
+            td= product.import_price*product.amount
 
   
     

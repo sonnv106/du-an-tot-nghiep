@@ -1,0 +1,26 @@
+extends ../../layouts/navbar-home.pug
+block content
+  div.container
+    div.d-flex
+      a(href="/statistical/inventory").cart.cart-view
+        div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#ffafbd, #ffc3a0)"}).d-flex.justify-content-center.align-items-center
+          h1.text-center.text-white Hàng tồn kho
+      a(href="/statistical/top").cart.cart-view
+        div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#ddd6f3, #faaca8)"}).d-flex.justify-content-center.align-items-center
+          h1.text-center.text-white Top bán chạy
+      a(href="/statistical/topcustomer").cart.cart-view
+        div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#4568dc, #b06ab3)"}).d-flex.justify-content-center.align-items-center
+          h1.text-center.text-white Khách hàng vàng
+    div.d-flex
+      div.cart.cart-view
+        div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#ffafbd, #ffc3a0)"}).d-flex-column.justify-content-center.align-items-center
+          h1.text-center.text-white Doanh thu tổng
+          h2.text-center.text-white= doanhThu +' đ'
+      div.cart.cart-view
+        div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#ffafbd, #ffc3a0)"}).d-flex-column.justify-content-center.align-items-center
+          h1.text-center.text-white Doanh thu hôm nay
+          h2.text-center.text-white= doanhThuHomNay +' đ'
+      a(href="/statistical/expired").cart.cart-view
+        div(style={color: 'red', background: 'green',width: '400', height: '400',background: "linear-gradient(#FF416C, #FF4B2B)"}).d-flex.justify-content-center.align-items-center
+          h1.text-center.text-white Sản phẩm hết hạn
+  

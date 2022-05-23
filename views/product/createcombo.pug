@@ -1,0 +1,38 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h1 Thêm sản phẩm vào combo
+  if errors
+    each error in errors
+      .alert.alert-danger= error
+  form(method="POST" action='/products/create/combo' )
+    label(for="category") Tên sản phẩm 1
+    select#sp1.form-select(aria-label='Default select example' name='sp1' onchange='onchange1()')
+      each variant in variants
+        option(value = variant.variant_id)= variant.name
+    .form-group
+      label(for="sp1") Số lượng
+      input.form-control(type="text", name="sp1", value = values ? values.amount1 : "")
+    label(for="category") Tên sản phẩm 2
+    select#sp2.form-select(aria-label='Default select example' name='sp2' )
+      each variant in variants
+        option(value = variant.variant_id)= variant.name
+    .form-group
+      label(for="sp1") Số lượng
+      input.form-control(type="text", name="sp2", value = values ? values.amount2 : "")
+    label(for="category") Tên sản phẩm 3
+    select#sp3.form-select(aria-label='Default select example' name='sp3' )
+      each variant in variants
+        option(value = variant.variant_id)= variant.name
+    .form-group
+      label(for="sp3") Số lượng
+      input.form-control(type="text", name="sp3", value = values ? values.amount3 : "")
+    .form-group
+      label(for="sp3") Số combo muốn tạo
+      input.form-control(type="text", name="amount")
+    .form-group
+      label(for="sp3") Số tiền muốn giản trên một combo
+      input.form-control(type="text", name="discount")   
+    label(for="category") Tên combo
+    select#sp1.form-select(aria-label='Default select example' name='id')
+      option(value = combo.product_id)= combo.name
+    button.btn.btn-primary.mt-1 Thêm

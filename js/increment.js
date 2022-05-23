@@ -27,3 +27,7 @@ function decreaseValueCart() {
   value--;
   document.getElementById('amount').value = value;
 }
+function onchange1 (){
+  var value = document.getElementById('sp1').value
+  console.log('hello')
+}

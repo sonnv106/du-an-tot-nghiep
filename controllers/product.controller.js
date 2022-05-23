@@ -1,6 +1,7 @@
 var Product = require("../models/product.model");
 var User = require("../models/user.model");
 var Category = require("../models/category.model");
+var Variant = require("../models/variant.model")
 var cloudinary = require("../cloudinary");
 var jwt = require("jsonwebtoken");
 
@@ -32,7 +33,6 @@ module.exports.postCreate = async (req, res, next) => {
     const newPath = await cloudinary.uploader.upload(path);
     urls.push(newPath.secure_url);
   }
-
   var errors = [];
   if (!req.body.name) {
     errors.push("Tên phải được khai báo");
@@ -70,9 +70,10 @@ module.exports.postCreate = async (req, res, next) => {
 module.exports.getDetailProduct = async (req, res, next) => {
   var id = req.params.id;
   var product = await Product.findOne({ _id: id });
-
+  var variants = await Variant.find({product_id: id})
   res.render("product/product-detail", {
     product: product,
+    variants: variants
   });
 };
 
@@ -184,4 +185,90 @@ module.exports.filter = async (req, res) => {
 };
 module.exports.hide = async (req, res)=>{
   
+}
+module.exports.createCombo = async (req, res)=>{
+  var products = await Product.find()
+  var variants = await Variant.find();
+  var combo = await Product.findOne({name: 'Combo'})
+  var errors =[]
+  var id1 = req.body.sp1[0];
+  var sl1 = req.body.sp1[1]
+  var id2 = req.body.sp2[0];
+  var sl2 = req.body.sp2[1];
+  var id3 = req.body.sp3[0];
+  var sl3 = req.body.sp3[1];
+  var sp1 = await Variant.findOne({_id: id1});
+  var sp2 = await Variant.findOne({_id: id2})
+  var sp3 = await Variant.findOne({_id: id3})
+  if(sp1 === sp2 | sp1 === sp3 | sp2 === sp3){
+    errors.push('Sản phẩm lựa chọn giống nhau')
+    var listProduct = []
+    for(let variant of variants){
+      var product = await Product.findOne({_id: variant.product_id})
+      var data = {
+        variant_id: variant.id,
+        product_id: variant.product_id,
+        name: product.name
+      }
+      listProduct.push(data)
+    }
+    res.render('product/createcombo',{
+      variants: listProduct,
+      errors: errors
+    })
+    return;
+  }else{
+    var discount = req.body.discount;
+    var data = {
+      product_id: combo.id,
+      image: [...sp1.image,...sp2.image, ...sp3.image],
+      size:'',
+      smell: '',
+      color: '',
+      amount: req.body.amount,
+      mfg: sp1.mfg,
+      exp: sp1.exp,
+      import_price: sp1.import_price*sl1 + sp2.import_price*sl2 + sp3.import_price*sl3,
+      price: sp1.price*sl1 + sp2.price*sl2 + sp3.price*sl3 - discount,
+      measure: 'bộ'
+    }
+    console.log(data)
+    await Variant.create(data);
+    
+    var categories = await Category.find();
+
+    var page = parseInt(req.query.page) || 1;
+    var perPage = 8;
+    var start = (page - 1) * perPage;
+    var end = page * perPage;
+    var countProducts = products.length;
+
+    res.render('product/getall', {
+      products: products.slice(start, end),
+      categories: categories,
+      currentPage: page,
+      pages: Math.ceil(countProducts / perPage)
+      
+    })
+  }
+  
+}
+module.exports.getCreateCombo = async (req, res)=>{
+  var variants = await Variant.find();
+  var combo = await Product.findOne({name: 'Combo'})
+  var listProduct = []
+  for(let variant of variants){
+    var product = await Product.findOne({_id: variant.product_id})
+    var data = {
+      variant_id: variant.id,
+      product_id: variant.product_id,
+      name: product.name
+    }
+    listProduct.push(data)
+  }
+  
+  res.render('product/createcombo',{
+    variants: listProduct,
+    combo: combo
+  })
 }

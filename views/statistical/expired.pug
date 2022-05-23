@@ -1,0 +1,13 @@
+extends ../../layouts/navbar-home.pug
+block content
+  h2 Danh sách hàng hết hạn
+    table.table.table-borderless
+      thead
+        tr
+          th Id sản phẩm
+          th Tên sản phẩm
+      tbody
+        each product in products
+          tr
+            td= product.id
+            td= product.name

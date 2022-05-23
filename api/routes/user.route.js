@@ -21,9 +21,9 @@ router. post('/forgot/password', controller.forgotPassword )
 // thay doi thong tin
 router.post('/update/info', upload.single('avatar'), controller.updateInfo)
 
-router.get('/favorite', controller.getFavoriteProduct) 
+router.get('/favorite/:token', controller.getFavoriteProduct) 
 
-router.post('/favorite/add', controller.addFavoriteProduct)
+router.post('/favorite/add/:token', controller.addFavoriteProduct)
 
 router.get('/:token', controller.getInfo)
 

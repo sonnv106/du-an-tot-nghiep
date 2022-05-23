@@ -4,22 +4,19 @@ block content
   if errors
     each error in errors
       .alert.alert-danger= error
-  form(method="POST" action='/variant/create' )
+  form(method="POST" action='/variant/create' enctype="multipart/form-data" )
     .form-group
-        label(for="product_id") Mã sản phẩm
-        input#product_id.form-control(type="text", name="product_id", value = product_id, readonly)
+      label(for="product_id") Mã sản phẩm
+      input#product_id.form-control(type="text", name="product_id", value = product_id, readonly)
     .form-group
-      label(for="name") name
+      label(for="name") Tên 
       input#name.form-control(type="text", name="name", value = name, readonly)
     .form-group
-        label(for="size") Size
-        input#size.form-control(type="text", name="size", value = values ? values.size : "")
+      label(for="image") Ảnh minh họa
+      input#image.form-control(type="file", name="image" accept='image/*' multiple)
     .form-group
-      label(for="smell") Hương vị
-      input#smell.form-control(type="text", name="smell", value = values ? values.smell : "")
-    .form-group
-      label(for="color") Màu sắc
-      input#color.form-control(type="text", name="color", value = values ? values.color : "")
+      label(for="size") Size
+      input#size.form-control(type="text", name="size", value = values ? values.size : "")
     .form-group
       label(for="amount") Số lượng
       input#amount.form-control(type="text", name="amount", value = values ? values.amount : "")
@@ -53,4 +50,5 @@ block content
         option(value = 'Bộ')= 'Bộ'
         option(value ='gram')= "Gram"
         option(value = 'Kg')= 'Kg'
+        option(value = 'Lon')= 'Lon'
     button.btn.btn-primary.mt-1 Thêm

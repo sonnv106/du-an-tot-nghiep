@@ -7,6 +7,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 var User = require("../../models/user.model");
 var Product = require("../../models/product.model");
 var Cart = require("../../models/cart.model");
+var Variant = require('../../models/variant.model')
 const shortid = require("shortid");
 
 //lay tat ca thong tin
@@ -235,54 +236,54 @@ module.exports.updateInfo = async (req, res) => {
 };
 // lấy sản phẩm yêu thích
 module.exports.getFavoriteProduct = async (req, res) => {
-  if (!req.body.token) {
+  if (!req.params.token) {
     res.json("Error, missed token");
   } else {
     var user_id = jwt.verify(
-      req.body.token,
+      req.params.token,
       process.env.ACCESS_TOKEN_SECRET
     ).id;
     var user = await User.findOne({ _id: user_id });
     var favoriteProducts = [];
     // chi tiet san pham
     for (let item of user.favorite) {
-      var product = await Product.findOne({ _id: item });
-      favoriteProducts.push(product);
-      
+      var variant = await Variant.findOne({ _id: item });
+      favoriteProducts.push(variant);
     }
-    res.json(favoriteProducts);
+    user.favorite = favoriteProducts;
+    res.json(user.favorite);
   }
 };
 //thêm sản phẩm yêu thích
 module.exports.addFavoriteProduct = async (req, res) => {
-  if (!(req.body.token && req.body.product_id)) {
+  if (!(req.params.token && req.body.variant_id)) {
     res.json("Error, missed token or product_id");
   } else {
     var user_id = jwt.verify(
-      req.body.token,
+      req.params.token,
       process.env.ACCESS_TOKEN_SECRET
     ).id;
     var user = await User.findOne({ _id: user_id });
-    if (user.favorite.includes(req.body.product_id)) {
+    if (user.favorite.includes(req.body.variant_id)) {
       res.json("Product already exists");
     } else {
-      user.favorite.push(req.body.product_id);
+      user.favorite.push(req.body.variant_id);
       await user.save();
-      res.json(user.favorite);
+      res.json(user);
     }
   }
 };
 //xóa một sản phẩm yêu thích
 module.exports.removeFavoriteProduct = async (req, res) => {
-  if (!(req.body.token && req.body.product_id)) {
-    res.json("Error, missed token or product_id");
+  if (!(req.params.token && req.body.variant_id)){
+    res.json("Error, missed token or variant_id");
   } else {
     var user_id = jwt.verify(
       req.body.token,
       process.env.ACCESS_TOKEN_SECRET
     ).id;
     var user = await User.findOne({ _id: user_id });
-    var indexProduct = user.favorite.indexOf(req.body.product_id);
+    var indexProduct = user.favorite.indexOf(req.body.variant_id);
     user.favorite = user.favorite.splice(indexProduct, 1);
     await user.save();
     res.json(user.favorite);

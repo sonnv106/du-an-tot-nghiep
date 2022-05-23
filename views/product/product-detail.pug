@@ -5,11 +5,6 @@ block content
       img.image-detail-product(src= product.image[0])
     div.info-detail-product
       h2= product.name
-      h3= 'Giá ' + product.price + 'đ'
-      div.d-flex
-        b.d-flex.mx-1
-          p= 'Quy cách: '
-        span= product.packaging
       div.d-flex
         b.d-flex.mx-1
           p= 'Danh mục: '
@@ -22,10 +17,6 @@ block content
         b.d-flex.mx-1
           p= 'Nguồn hàng: '
         span= product.source
-      div.d-flex
-        b.d-flex.mx-2
-          p= 'Quy cách: '
-        span= product.packaging
       div.d-flex
         b.d-flex.mx-2
           p= 'Xuất xứ: '
@@ -43,5 +34,32 @@ block content
           p= 'Chi tiết: '
         span= product.detail
       a.btn.btn-outline-primary.m-1(href='/variant/create/'+product.id) Tạo loại sản phẩm
-      
-      
+  div.container
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th Hình ảnh
+          th Tên sản phẩm
+          th Size
+          th Hương vị
+          th Giá nhập
+          th Giá bán
+          th Số lượng
+          th Đơn vị
+          th Active
+      tbody
+        each variant in variants
+          tr
+            td
+              image.card-img-top(src= variant.image[0], style="width: 100; height: 100")
+            td= product.name
+            td= variant.size
+            td= variant.smell
+            td= variant.import_price
+            td= variant.price
+            td= variant.amount
+            td= variant.measure
+            td.justify-content-center.align-items-center
+              a(href='/variant/update/'+variant.id).btn.btn-outline-primary Sửa
+              a(href='/variant/delete/'+variant.id).btn.btn-outline-primary Xóa
+            

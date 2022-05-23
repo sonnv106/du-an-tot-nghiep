@@ -1,19 +1,26 @@
 extends ../../layouts/navbar-home.pug
 block content
   h1 Danh sách bán chạy
-    table.table
-      thead
+    div.d-flex.justify-content-between
+    div.d-flex
+      div
+        form(method="GET" action='/statistical/top/month' enctype='application/x-www-form-urlencoded')
+          div.d-flex
+            input#name.flex-grow-1(type="month", name="month" placeholder= "tháng/năm")
+            button.btn.btn-primary Tìm kiếm
+  table.table
+    thead
+      tr
+        th Tên sản phẩm
+        th Số lượng bán
+        th Giá
+        th Tổng tiền
+    tbody
+      each product in products
         tr
-          th Tên sản phẩm
-          th Số lượng bán
-          th Giá
-          th Tổng tiền
-      tbody
-        each product in products
-          tr
-            td= product.product_name
-            td= product.amount
-            td= product.price
-            td= product.price*product.amount
+          td= product.product_name
+          td= product.amount
+          td= product.price
+          td= product.price*product.amount
   
   

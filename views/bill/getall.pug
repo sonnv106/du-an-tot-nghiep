@@ -6,7 +6,7 @@ block content
       div
         form(method="GET" action='/bills/search/date' enctype='application/x-www-form-urlencoded')
           div.d-flex
-            input#name.flex-grow-1(type="text", name="date" placeholder= "tháng/ngày/năm")
+            input#name.flex-grow-1(type="date", name="date" placeholder= "tháng/ngày/năm")
             button.btn.btn-primary Tìm kiếm
       div
         form(method="GET" action='/bills/search/name' enctype='application/x-www-form-urlencoded')
@@ -41,4 +41,3 @@ block content
           a(href="/bills/confirm/"+bill.id).btn.btn-outline-primary= bill.bill_status ? "Đã xác nhận": "Chưa xác nhận"
         td.d-flex
           a(href="/bills/detail/"+bill.id).btn.btn-primary Chi tiết
-          a(href="/bills/delete/"+bill.id).btn.btn-warning Xóa

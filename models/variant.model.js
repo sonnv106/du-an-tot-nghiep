@@ -13,6 +13,7 @@ const variantSchema = new Schema({
   import_price: Number,  //gia nhap
   price: Number,
   quantily: Number,   
+  image: Array,
 });
 
 const Variant = mongoose.model("variants", variantSchema);

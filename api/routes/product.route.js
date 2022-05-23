@@ -7,4 +7,5 @@ router.get("/getall",controller.getAll)
 router.post("/create",upload.single("image"), controller.createProduct);
 router.get("/category/:id", controller.getProductCategory)
 router.get("/:product_id", controller.getProductById)
+router.get("/detail/:id", controller.getDetail)
 module.exports = router;
